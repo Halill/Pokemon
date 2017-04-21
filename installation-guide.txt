@@ -1,2 +1,10 @@
 1) Install PHP 
 http://windows.php.net/download/
+
+2) Install pear Package Manager
+https://pear.php.net/manual/en/installation.getting.php
+
+3)Install package Mail & Net_SMTP
+
+https://pear.php.net/package/Mail
+https://pear.php.net/package/Net_SMTP/
