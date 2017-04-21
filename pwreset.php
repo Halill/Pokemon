@@ -8,7 +8,7 @@ try {
 }
 
 if(!isset($_GET['userid']) || !isset($_GET['code'])) {
-	die("Leider wurde kein Code zum Zurücksetzen deines Passworts übermittelt");
+	die("Leider wurde kein Code zum Zurï¿½cksetzen deines Passworts ï¿½bermittelt");
 }
 
 $userid = $_GET['userid'];
@@ -19,7 +19,7 @@ $statement = $pdo->prepare("SELECT * FROM users WHERE id = :userid");
 $result = $statement->execute(array('userid' => $userid));
 $user = $statement->fetch();
 
-//Überprüfe dass ein Nutzer gefunden wurde und dieser auch ein Passwortcode hat
+//ï¿½berprï¿½fe dass ein Nutzer gefunden wurde und dieser auch ein Passwortcode hat
 if($user === null || $user['passwortcode'] === null) {
 	die("Es wurde kein passender Benutzer gefunden");
 }
@@ -29,9 +29,9 @@ if($user['passwortcode_time'] === null || strtotime($user['passwortcode_time']) 
 }
 
 
-//Überprüfe den Passwortcode
+//ï¿½berprï¿½fe den Passwortcode
 if(sha1($code) != $user['passwortcode']) {
-	die("Der übergebene Code war ungültig. Stell sicher, dass du den genauen Link in der URL aufgerufen hast.");
+	die("Der Ã¼bergebene Code war ungÃ¼ltig. Stell sicher, dass du den genauen Link in der URL aufgerufen hast.");
 }
 
 //Der Code war korrekt, der Nutzer darf ein neues Passwort eingeben
@@ -39,21 +39,21 @@ if(sha1($code) != $user['passwortcode']) {
 if(isset($_GET['send'])) {
 	$passwort = $_POST['passwort'];
 	$passwort2 = $_POST['passwort2'];
-	
+
 	if($passwort != $passwort2) {
-		echo "Bitte identische Passwörter eingeben";
-	} else { //Speichere neues Passwort und lösche den Code
+		echo "Bitte identische Passwï¿½rter eingeben";
+	} else { //Speichere neues Passwort und lï¿½sche den Code
 		$passworthash = password_hash($passwort, PASSWORD_DEFAULT);
 		$statement = $pdo->prepare("UPDATE users SET passwort = :passworthash, passwortcode = NULL, passwortcode_time = NULL WHERE id = :userid");
 		$result = $statement->execute(array('passworthash' => $passworthash, 'userid'=> $userid ));
-		
+
 		if($result) {
-			die("Dein Passwort wurde erfolgreich geändert");
+			die("Dein Passwort wurde erfolgreich geï¿½ndert");
 		}
 	}
 }
 ?>
- 
+
 <head>
 <link href="background.css" rel="stylesheet">
 </head>
@@ -62,9 +62,9 @@ if(isset($_GET['send'])) {
 <form action="?send=1&amp;userid=<?php echo htmlentities($userid); ?>&amp;code=<?php echo htmlentities($code); ?>" method="post">
 Bitte gib ein neues Passwort ein:<br>
 <input type="password" name="passwort"><br><br>
- 
+
 Passwort erneut eingeben:<br>
 <input type="password" name="passwort2"><br><br>
- 
+
 <input type="submit" value="Passwort speichern">
 </form>

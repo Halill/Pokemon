@@ -7,5 +7,6 @@ echo "Logout erfolgreich";
 
 
 <head>
+<link rel="shortcut icon" type="image/x-icon" href="bilder/pokeball.ico" />
 <link href="background.css" rel="stylesheet">
 </head>

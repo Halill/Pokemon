@@ -9,31 +9,31 @@ try {
 }
 
 /**
- * Der übergebene Username und das Passwort werden gespeichert.
- * Anschließend wird der Username in ein Prepared Statement übergeben und die Userdaten abgefragt.
- * Das Passwort wird über die password_verify-Funktion verifiziert. Bei korrektem Passwort wird auf die loggedin-Seite weitergeleitet.
+ * Der ï¿½bergebene Username und das Passwort werden gespeichert.
+ * Anschlieï¿½end wird der Username in ein Prepared Statement ï¿½bergeben und die Userdaten abgefragt.
+ * Das Passwort wird ï¿½ber die password_verify-Funktion verifiziert. Bei korrektem Passwort wird auf die loggedin-Seite weitergeleitet.
  * Bei falschem Passwort oder nicht vorhandenem Username wird eine Fehlermeldung ausgegeben.
  */
 if(isset($_GET['login'])) {
 	$username = $_POST['username'];
 	$passwort = $_POST['passwort'];
-	
+
 	$statement = $pdo->prepare("SELECT * FROM users WHERE username = :username");
 	$result = $statement->execute(array('username' => $username));
 	$user = $statement->fetch();
-	
-	//Überprüfung des Passworts
-	if ($user !== false && password_verify($passwort, $user['passwort'])) {	
-		$_SESSION['userid'] = $user['ID'];		
+
+	//ï¿½berprï¿½fung des Passworts
+	if ($user !== false && password_verify($passwort, $user['passwort'])) {
+		$_SESSION['userid'] = $user['ID'];
 		header("Location: loggedin.php");
 		exit;
 	} else {
-		$errorMessage = "Benutzername oder Passwort war ungültig<br>";
+		$errorMessage = "Benutzername oder Passwort war ungï¿½ltig<br>";
 	}
-	
+
 }
 ?>
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -45,24 +45,25 @@ body{
   justify-content: center;
   flex-flow: row wrap;
 }
- 
+
 header, nav, footer {
   flex: 1 100%;
 }
- 
+
 article {
   flex: 3 1 0%;
 }
- 
+
 aside {
   flex: 1 1 0%;
 }
 </style>
-  <title>Pokemon-Game Login</title> 
-</head> 
+  <title>Pokemon-Game Login</title>
+	<link rel="shortcut icon" type="image/x-icon" href="bilder/pokeball.ico" />
+</head>
 <body>
- 
-<?php 
+
+<?php
 if(isset($errorMessage)) {
  echo $errorMessage;
 }
@@ -71,17 +72,17 @@ if(isset($errorMessage)) {
 <form action="?login=1" method="post">
 Benutzername:<br>
 <input type="text" size="40" maxlength="250" name="username"><br><br>
- 
+
 Dein Passwort:<br>
 <input type="password" size="40"  maxlength="250" name="passwort"><br>
- 
+
 <input type="submit" value="Abschicken">
 <br><br>
 
 <a href="pwvergessen.php"><button name=pwvergessen type="button">Passwort vergessen</button></a>
 <a href="register.php"><button name=register type="button">Registrieren</button></a>
 
-</form> 
+</form>
 
 
 </body>
