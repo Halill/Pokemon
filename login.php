@@ -9,9 +9,9 @@ try {
 }
 
 /**
- * Der �bergebene Username und das Passwort werden gespeichert.
- * Anschlie�end wird der Username in ein Prepared Statement �bergeben und die Userdaten abgefragt.
- * Das Passwort wird �ber die password_verify-Funktion verifiziert. Bei korrektem Passwort wird auf die loggedin-Seite weitergeleitet.
+ * Der Uebergebene Username und das Passwort werden gespeichert.
+ * Anschliessend wird der Username in ein Prepared Statement uebergeben und die Userdaten abgefragt.
+ * Das Passwort wird ueber die password_verify-Funktion verifiziert. Bei korrektem Passwort wird auf die loggedin-Seite weitergeleitet.
  * Bei falschem Passwort oder nicht vorhandenem Username wird eine Fehlermeldung ausgegeben.
  */
 if(isset($_GET['login'])) {
