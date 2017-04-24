@@ -1,7 +1,0 @@
-E-Mail Versand 
--> benötigt SMTP Server (bspw. über eigenen E-Mail Account oder Seiten wie mailjet.com)
--> oder: Amazon SES 
-
-Nutzerverwaltung 
-Im Startbildschirm nach dem Login sollte neben den Spielständen auch ein Button "Account verwalten" hinterlegt sein. Hierüber sollte man seine E-Mailadresse einsehen und ändern, sowie das Passwort bearbeiten können. Evtl. weitere Funktionen wie Gesamt-Statistik (Spielzeit mit allen Spielständen zusammen) o.Ä.
-
