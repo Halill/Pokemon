@@ -23,7 +23,7 @@ if(isset($_GET['login'])) {
 	//Ueberpruefung des Passworts
 	if ($user !== false && password_verify($passwort, $user['passwort'])) {
 		$_SESSION['userid'] = $user['ID'];
-		header("Location: loggedin.php");
+		header("Location: game.php");
 		exit;
 	} else {
 		$errorMessage = "Benutzername oder Passwort war ungültig<br>";
