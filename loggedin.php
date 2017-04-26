@@ -1,17 +1,24 @@
 <?php
-session_start();
+include 'config.php';
 
 /**
- * Überprüfung, ob der User eingeloggt ist, indem die Userid aus der Session abgefragt wird.
+ * ï¿½berprï¿½fung, ob der User eingeloggt ist, indem die Userid aus der Session abgefragt wird.
  * Bei nicht gesetzter Userid wird der User auf die Login-Seite verwiesen.
  */
 
 if(!isset($_SESSION['userid'])) {
-	die('Bitte zuerst <a href="login.php">einloggen</a>');
+	$ausgabe = 'Bitte zuerst <a href="index.php">einloggen</a>';
 }
 
 //Abfrage der Nutzer ID vom Login
 $userid = $_SESSION['userid'];
-
-echo "Jetzt haette das Spiel starten sollen ...";
+$statement = $pdo->prepare("SELECT * FROM spielstand WHERE spielerid = :id");
+$result = $statement->execute(array('id' => $userid));
+$spielstand = $statement->fetch();
+if(empty($spielstand)){
+	$ausgabe =  "Kein Spielstand gefunden";
+}
+else {
+	$ausgabe =  "Spielstand vorhanden";
+}
 ?>

@@ -3,8 +3,8 @@
 }
 
 html {
-  overflow-y: scroll;
-  background: url(background.jpg) no-repeat center center fixed; 
+  overflow: hidden;
+  background: url(background.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -69,7 +69,7 @@ a:hover {
 }
 
 .tab-content > div:last-child {
-  display: none;  
+  display: none;
 }
 
 h1 {

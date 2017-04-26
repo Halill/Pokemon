@@ -12,6 +12,7 @@ if(isset($_GET['register'])) {
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="shortcut icon" type="image/x-icon" href="bilder/pokeball.ico" />
   <meta charset="UTF-8">
   <title>Pokemon-Game</title>
   <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
