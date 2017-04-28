@@ -1,11 +1,11 @@
 var SimpleGame = (function () {
     function SimpleGame() {
-        this.game = new Phaser.Game(window.innerWidth * window.devicePixelRatio - 50, window.innerHeight * window.devicePixelRatio - 50, Phaser.CANVAS, 'content', { preload: this.preload, create: this.create, update: this.update, render: this.render });
+        this.game = new Phaser.Game(2000 , 2000, Phaser.CANVAS, 'content', { preload: this.preload, create: this.create, update: this.update, render: this.render });
     }
     SimpleGame.prototype.preload = function () {
-        this.game.load.image('background', 'background.jpg');
-        this.game.load.image('Map1', 'assets/misc/Map1/Viridian_City_Map.png');
-        this.game.load.image('house', 'assets/misc/Map1/TopLeftN.png');
+        this.game.load.image('background', '/bilder/background.jpg');
+        this.game.load.image('Map1', '/assets/misc/Map1/Viridian_City_Map.png');
+        this.game.load.image('house', '/assets/misc/Map1/TopLeftN.png');
         this.game.load.image('heightmap', 'assets/misc/Map1/Heightmap.png');
         this.game.load.spritesheet('button', 'assets/buttons/button_sprite_sheet.png', 100, 100);
         this.game.load.spritesheet('player', 'assets/misc/Player/Player_Sprite.png', 19, 27);
@@ -22,7 +22,7 @@ var SimpleGame = (function () {
         this.button.onInputOver.add(over, this);
         this.button.onInputOut.add(out, this);
         this.button.onInputUp.add(up, this);
-        this.map1 = this.game.add.sprite(0, 0, 'Map1');
+        this.map1 = this.game.add.sprite(560, 464, 'Map1');
         //this.map1.anchor.setTo(0.5, 0.5);
         this.map1.visible = false;
         this.player = this.game.add.sprite(this.game.world.centerX / 2, this.game.world.centerY, 'player');
