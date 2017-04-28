@@ -47,27 +47,24 @@ var SimpleGame = (function () {
     };
     SimpleGame.prototype.update = function () {
         var speed = 4;
-        if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-            if (this.bmd.getPixelRGB(this.player.x, this.player.y).r > 0 && this.bmd.getPixelRGB(this.player.x, this.player.y).g > 0 && this.bmd.getPixelRGB(this.player.x, this.player.y).b > 0)
+  if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
+          //  alert("Oke");
+            if (this.bmd.getPixelRGB(this.player.x - 1, this.player.y).r > 0 && this.bmd.getPixelRGB(this.player.x - 1, this.player.y).g > 0 && this.bmd.getPixelRGB(this.player.x - 1, this.player.y).b > 0)
                 this.player.x -= speed;
             this.player.frame = 1;
-            var text;
-            for (var t = 0; t < 1000; t++)
-                text += " " + this.bmd.getPixelRGB(t, 10).r;
         }
         else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-            var text;
-            if (this.bmd.getPixelRGB(this.player.x, this.player.y).r > 0 && this.bmd.getPixelRGB(this.player.x, this.player.y).g > 0 && this.bmd.getPixelRGB(this.player.x, this.player.y).b > 0)
+            if (this.bmd.getPixelRGB(this.player.x + 1, this.player.y).r > 0 && this.bmd.getPixelRGB(this.player.x + 1, this.player.y).g > 0 && this.bmd.getPixelRGB(this.player.x + 1, this.player.y).b > 0)
                 this.player.x += speed;
             this.player.frame = 2;
         }
         else if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-            if (this.bmd.getPixelRGB(this.player.x, this.player.y).r > 0 && this.bmd.getPixelRGB(this.player.x, this.player.y).g > 0 && this.bmd.getPixelRGB(this.player.x, this.player.y).b > 0)
+            if (this.bmd.getPixelRGB(this.player.x, this.player.y + 1).r > 0 && this.bmd.getPixelRGB(this.player.x, this.player.y + 1).g > 0 && this.bmd.getPixelRGB(this.player.x, this.player.y + 1).b > 0)
                 this.player.y -= speed;
             this.player.frame = 5;
         }
         else if (this.game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
-            if (this.bmd.getPixelRGB(this.player.x, this.player.y).r > 0 && this.bmd.getPixelRGB(this.player.x, this.player.y).g > 0 && this.bmd.getPixelRGB(this.player.x, this.player.y).b > 0)
+            if (this.bmd.getPixelRGB(this.player.x, this.player.y - 1).r > 0 && this.bmd.getPixelRGB(this.player.x, this.player.y - 1).g > 0 && this.bmd.getPixelRGB(this.player.x, this.player.y - 1).b > 0)
                 this.player.y += speed;
             this.player.frame = 4;
         }
