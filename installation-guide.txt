@@ -8,3 +8,6 @@ https://pear.php.net/manual/en/installation.getting.php
 
 https://pear.php.net/package/Mail
 https://pear.php.net/package/Net_SMTP/
+
+3) xammp config ändern
+DocumentRoot auf public setzten
