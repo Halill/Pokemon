@@ -16,9 +16,11 @@ $statement = $pdo->prepare("SELECT * FROM spielstand WHERE spielerid = :id");
 $result = $statement->execute(array('id' => $userid));
 $spielstand = $statement->fetch();
 if(empty($spielstand)){
-	$ausgabe =  "Kein Spielstand gefunden";
+	$ausgabe = true;
+	$_SESSION['ausgabe'] = $ausgabe;
 }
 else {
-	$ausgabe =  "Spielstand vorhanden";
+	$ausgabe =  false;
+	$_SESSION['ausgabe'] = $ausgabe;
 }
 ?>

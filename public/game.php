@@ -1,8 +1,7 @@
 <?php
 session_start();
-session_regenerate_id();
 include '../loggedin.php';
-
+//if(!$_SESSION["ausgabe"]) exit("kein Spielstand vorhanden")
 ?>
 
 <!DOCTYPE html>
@@ -13,8 +12,8 @@ include '../loggedin.php';
     <title>Poke-Game</title>
 </head>
 <body>
-<?php echo $ausgabe ?>
- <iframe src="PlayerMovement.html" scrolling="no" height="500" width="1000" frameboder=0></iframe>
+ <iframe src="PlayerMovement.html" align="middle" scrolling="no" width="560" height="428"></iframe>
+
 <form method="post" action="logout.php">
   <input value="Logout" type="submit" name="sent">
 </form>
