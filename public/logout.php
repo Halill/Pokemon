@@ -9,6 +9,6 @@ include '../logout.php'
   <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
-  <?php echo $ausgabe ?>
+  <?php if($erfolgreich) header("Location: index.php");?>
 </body>
 </html>
