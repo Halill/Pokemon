@@ -7,7 +7,7 @@ include 'config.php';
  */
 
 if(!isset($_SESSION['userid'])) {
-	header("Location: login.php");
+	header("Location: public");
 }
 
 //Abfrage der Nutzer ID vom Login

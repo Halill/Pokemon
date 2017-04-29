@@ -2,6 +2,8 @@
 session_start();
 include '../loggedin.php';
 //if(!$_SESSION["ausgabe"]) exit("kein Spielstand vorhanden")
+$link = "PlayerMovement.html";
+if($_POST["change"]) $link = "pwchange.php";
 ?>
 
 <!DOCTYPE html>
@@ -12,10 +14,13 @@ include '../loggedin.php';
     <title>Poke-Game</title>
 </head>
 <body>
- <iframe src="PlayerMovement.html" align="middle" scrolling="no" width="560" height="428"></iframe>
+ <iframe src=<?php echo htmlentities($link); ?> align="middle" scrolling="no" width="560" height="428"></iframe>
 
 <form method="post" action="logout.php">
   <input value="Logout" type="submit" name="sent">
+</form>
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+  <input value="Passwort ändern" type="submit" name="change">
 </form>
 </body>
 </html>
