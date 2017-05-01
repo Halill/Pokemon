@@ -2,12 +2,12 @@
 include 'config.php';
 
 /**
- * �berpr�fung, ob der User eingeloggt ist, indem die Userid aus der Session abgefragt wird.
+ * Überprüfung, ob der User eingeloggt ist, indem die Userid aus der Session abgefragt wird.
  * Bei nicht gesetzter Userid wird der User auf die Login-Seite verwiesen.
  */
 
 if(!isset($_SESSION['userid'])) {
-	$ausgabe = 'Bitte zuerst <a href="index.php">einloggen</a>';
+	header("Location: public");
 }
 
 //Abfrage der Nutzer ID vom Login
