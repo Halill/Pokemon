@@ -2,11 +2,10 @@
 
 if(isset($_POST['sent'])){
   session_start();
+  $_SESSION = array();
+  session_destroy();
   session_regenerate_id();
-
-
-
-  $ausgabe =  "Logout erfolgreich";
+  $erfolgreich = true;
 }
 
 ?>
