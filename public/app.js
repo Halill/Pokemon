@@ -6,6 +6,8 @@ var SimpleGame = (function () {
         this.game.load.image('background', '/bilder/background.jpg');
         this.game.load.image('Map1', '/assets/misc/Map1/Viridian_City_Map.png');
         this.game.load.image('heightmap', 'assets/misc/Map1/Heightmap.png');
+		this.game.load.image('texBox', 'assets/misc/Chat/chatBox.png');
+		this.game.load.text('text');
         this.game.load.spritesheet('button', 'assets/buttons/button_sprite_sheet.png', 100, 100);
         this.game.load.spritesheet('player', 'assets/misc/Player/Player_Sprite.png', 19, 27);
     };
@@ -27,9 +29,14 @@ var SimpleGame = (function () {
         this.player = this.game.add.sprite(300,400, 'player');
         this.player.name = "undefined";
         this.player.visible = false;
+		
+		this.texBox = this.game.add.sprite(501,1002, 'texBox');
+        this.texBox.name = "chat";
+        this.texBox.visible = false;
         //this.house = this.game.add.sprite(380,0, 'house');
         //this.house.name = "undefined";
         //this.house.visible = false;
+		
         //Reservieren der Pfeiltasten für das Spiel. Dadurch wird verhindert, dass die Scrollbars der Website nicht darauf reagieren.
         var upKey;
         var downKey;
@@ -43,18 +50,37 @@ var SimpleGame = (function () {
         this.bmd = this.game.make.bitmapData(1120, 928);
         this.bmd.draw('heightmap');
         this.bmd.update();
+		
+		
+		this.text = this.game.add.text(516,1015, "- You have clicked -\n0 times !", {
+        font: "20px Arial",
+        fill: "#ff0044",
+        align: "center"
+    });
+	this.text.visible = false;
+		
     };
     SimpleGame.prototype.update = function () {
         var speed = 2;
-  if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
+	if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 			
 			var isMoveable = 0; 
+
 			for(var y = 0; y <= 27; y++)
 			{
 				if (this.bmd.getPixelRGB(this.player.x - speed, this.player.y + y).r == 0 && this.bmd.getPixelRGB(this.player.x - speed, this.player.y + y).g == 0 && this.bmd.getPixelRGB(this.player.x - speed, this.player.y + y).b == 0)
 				{
 					isMoveable = 1;
 					break;
+				}
+				else if (this.bmd.getPixelRGB(this.player.x + speed + 18, this.player.y + y).r == 0 && this.bmd.getPixelRGB(this.player.x + speed + 18, this.player.y + y).g == 255 && this.bmd.getPixelRGB(this.player.x + speed + 18, this.player.y + y).b == 96)
+				{
+					if(getRndInteger(0,4000) == 1)
+					{	
+						this.text.visible = true;
+						this.texBox.visible = true;
+						this.text.setText("Pokemon appeard");
+					}
 				}
 			}
 			if(isMoveable == 0)
@@ -70,6 +96,15 @@ var SimpleGame = (function () {
 				{
 					isMoveable = 1;
 					break;
+				}
+				else if (this.bmd.getPixelRGB(this.player.x + speed + 18, this.player.y + y).r == 0 && this.bmd.getPixelRGB(this.player.x + speed + 18, this.player.y + y).g == 255 && this.bmd.getPixelRGB(this.player.x + speed + 18, this.player.y + y).b == 96)
+				{
+					if(getRndInteger(0,4000) == 1)
+					{	
+						this.text.visible = true;
+						this.texBox.visible = true;
+						this.text.setText("Pokemon appeard");
+					}
 				}
 			}
 			if(isMoveable == 0)
@@ -89,7 +124,7 @@ var SimpleGame = (function () {
 			}
 			if(isMoveable == 0)
 				this.player.y -= speed;
-            this.player.frame = 5;
+            this.player.frame = 3;
         }
         else if (this.game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
 			
@@ -114,6 +149,9 @@ var SimpleGame = (function () {
         //    this.game.debug.bodyInfo(this.house, 19, 27);
     };
 	
+	function getRndInteger(min, max) {
+		return Math.floor(Math.random() * (max - min + 1) ) + min;
+	}
     return SimpleGame;
 })();
 
