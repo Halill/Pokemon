@@ -3,7 +3,7 @@ session_start();
 include '../loggedin.php';
 //if(!$_SESSION["ausgabe"]) exit("kein Spielstand vorhanden")
 $link = "PlayerMovement.html";
-if($_POST["change"]) $link = "pwchange.php";
+if(isset($_POST["change"])) $link = "pwchange.php";
 ?>
 
 <!DOCTYPE html>
@@ -16,8 +16,7 @@ if($_POST["change"]) $link = "pwchange.php";
 </head>
 <body>
 
- <iframe src=<?php echo htmlentities($link); ?> align="middle" scrolling="no" width="560" height="428"></iframe>
-
+ <iframe style="margin: 0 auto; display: block;" src=<?php echo htmlentities($link); ?>  scrolling="no" width="560" height="428"></iframe>
 
 <form method="post" action="logout.php">
   <input value="Logout" type="submit" name="sent">
