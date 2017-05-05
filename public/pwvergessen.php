@@ -1,4 +1,11 @@
-<?php include '../pwvergessen.php' ?>
+<?php include '../pwvergessen.php'
+if(){
+
+  
+}
+
+
+ ?>
 
 <!DOCTYPE html>
 <html>
@@ -22,9 +29,9 @@
 
       <div class="tab-content">
 
+
 <!-- Hier beginnt die Passwort-vergessen-Seite -->
        <div id="pw">
-
           <h1>Passwort vergessen!</h1>
           <br><br>
           <form action="?email=1" method="post">
@@ -36,11 +43,36 @@
             <input type="email" name="email" value="<?php echo isset($_POST['email']) ? htmlentities($_POST['email']) : ''; ?>">
           </div>
 
-       		<input type="image" src="bilder/pokeball.png" alt="Passwort anfordern"/>
+       		<input type="image" src="bilder/pokeball.png" alt="Passwort anfordern" action=<?php send_pwforgotmail(); ?>/>
 
           </form>
 		</div>
+    <div id="login">
+       <h1>Willkommen!</h1>
 
+       <form action="?login=1" method="post">
+
+         <div class="field-wrap">
+         <label>
+           Benutzername<span class="req">*</span>
+         </label>
+         <input type="text" name="username"/>
+       </div>
+
+       <div class="field-wrap">
+         <label>
+           Passwort<span class="req">*</span>
+         </label>
+         <input type="password" name="passwort"/>
+       </div>
+
+       <p class="forgot"><a href="/pwvergessen.php">Passwort vergessen?</a></p>
+
+       <input type="image" src="bilder/pokeball.png" alt="Anmelden"/>
+
+       </form>
+
+     </div>
 </div>
 </div> <!-- /form -->
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
