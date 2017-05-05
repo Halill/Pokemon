@@ -25,7 +25,7 @@ if(isset($_SESSION["message"])) echo $_SESSION["message"];
 <body>
 <div id="wrapper">
 <div id="game">
-<iframe style="margin: 0 auto;display: block;" src=<?php echo htmlentities($link); ?>  scrolling="no" width="560" height="428"></iframe>
+<iframe style="margin: 0 auto;display: block;" src=<?php echo htmlentities($link); ?>  scrolling="no" width="760" height="628"></iframe>
 </div>
 <div id="menue">
 <fieldset style="align:right">
