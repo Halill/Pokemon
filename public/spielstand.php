@@ -1,10 +1,7 @@
 <?php
-
-
-
+session_start();
+include '../spielstand.php';
  ?>
-
-
  <!DOCTYPE html>
  <html>
  <head>
@@ -13,9 +10,13 @@
      <title>Poke-Game</title>
  </head>
  <body>
+<?php
 
- <form method="post" action="logout.php">
-   <input value="Logout" type="submit" name="sent">
- </form>
+for ($i=0; $i < sizeof($spielstand); $i++) {
+    echo $spielstand[$i]."\n";
+}
+
+  ?>
+
  </body>
  </html>

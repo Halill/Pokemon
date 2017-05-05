@@ -4,7 +4,7 @@
 
 html {
   overflow: hidden;
-  background: url(background.jpg) no-repeat center center fixed;
+  background: url(/bilder/background.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -190,4 +190,15 @@ textarea {
   margin-top: -20px;
   text-align: right;
   font-size: 20px;
+}
+#menue {
+  height: 100%;
+  width: 200px;
+  right: 10px;
+  position: absolute;
+  padding: 10px;
+  top: 0px;
+  margin-top: 0px;
+  margin-right: 20px;
+  margin-bottom: 0px;
 }

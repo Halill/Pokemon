@@ -1,4 +1,4 @@
-<<?php include '../pwvergessen.php' ?>
+<?php include '../pwvergessen.php' ?>
 
 <!DOCTYPE html>
 <html>

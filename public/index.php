@@ -43,14 +43,14 @@ Bei Klick auf Registrieren wird ueber die index.js der signup-Tab geoeffnet und 
             <label>
               Benutzername<span class="req">*</span>
             </label>
-            <input type="text" name="username" placeholder='1'/>
+            <input type="text" name="username"/>
           </div>
 
           <div class="field-wrap">
             <label>
               Passwort<span class="req">*</span>
             </label>
-            <input type="password" name="passwort" placeholder='1'/>
+            <input type="password" name="passwort"/>
           </div>
 
           <p class="forgot"><a href="../pwvergessen.php">Passwort vergessen?</a></p>
