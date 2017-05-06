@@ -6,7 +6,9 @@ include '../pwchange.php';
 
 <html>
 <head>
+
   <title>Pokemon-Game</title>
+  <link rel="shortcut icon" type="image/x-icon" href="assets/pokeball.ico" />
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
