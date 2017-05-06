@@ -1,5 +1,5 @@
 <?php
-include '../pwvergessen.php';
+include '../passwort_handler.php';
 $h = NEW Passwort_Handler();
 $ausgabe = $h->pwreset();
 echo $ausgabe;

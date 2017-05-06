@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../pwvergessen.php';
+include '../passwort_handler.php';
 if(isset($_POST['email'])){
     $h = NEW Passwort_Handler();
     $ausgabe = $h->send_pwforgotmail();
