@@ -10,6 +10,7 @@ var SimpleGame = (function () {
       //  this.game.load.spritesheet('button', 'assets/buttons/button_sprite_sheet.png', 100, 100);
         this.game.load.spritesheet('player', 'assets/misc/Player/Player_Sprite.png', 19, 27);
 		this.game.load.spritesheet('prof', 'assets/misc/NPC/Prof Halil.png', 389, 377);
+		this.game.load.spritesheet('nextDialog', 'assets/buttons/nextDialog.png', 75, 74);
     };
     SimpleGame.prototype.create = function () {
         this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -42,13 +43,19 @@ var SimpleGame = (function () {
 		this.prof.height= this.prof.height / 2;
 		this.prof.visible = false;
 		
-		
 		var offset = this.game.width / 2 - 499 / 2;
 		
 		this.texBox = this.game.add.sprite(Math.round(offset),this.game.height - 98, 'texBox');
 
         this.texBox.name = "chat";
-        this.texBox.visible = false;
+        this.texBox.visible = true;
+		
+		this.nextDialog = this.game.add.button(this.texBox.x + this.texBox.width - 50,this.game.height - 45, 'nextDialog', nextDialogEvent, this, 0,1,2);
+		this.nextDialog.visible = true;
+		this.nextDialog.width /= 2;
+		this.nextDialog.height /= 2;
+
+		
 		
         //Reservieren der Pfeiltasten für das Spiel. Dadurch wird verhindert, dass die Scrollbars der Website nicht darauf reagieren.
         var upKey;
@@ -109,10 +116,8 @@ var SimpleGame = (function () {
 				{
 					if(getRndInteger(0,3000) == 1)
 					{	
-						this.text.visible = true;
-						this.texBox.visible = true;
-						this.text.setText("Pokemon appeard");
-						openFightWindow(this.map1,this.battle);
+						openDialog(this.texBox,0,this.text);
+						openFightWindow(this.map1,this.battle,this.player);
 					}
 				}
 			}
@@ -136,10 +141,8 @@ var SimpleGame = (function () {
 				{
 					if(getRndInteger(0,3000) == 1)
 					{	
-						this.text.visible = true;
-						this.texBox.visible = true;
-						this.text.setText("Pokemon appeard");
-						openFightWindow(this.map1,this.battle);
+						openDialog(this.texBox,0,this.text);
+						openFightWindow(this.map1,this.battle,this.player);
 					}
 				}
 			}
@@ -191,18 +194,44 @@ var SimpleGame = (function () {
 	function getRndInteger(min, max) {
 		return Math.floor(Math.random() * (max - min + 1) ) + min;
 	}
-	function openFightWindow(mapPic,battlePic)
+	function openFightWindow(mapPic,battlePic,player)
 	{
 		mapPic.visible = false;
+		player.visible = false;
 		battlePic.visible = true;
 	}
     return SimpleGame;
 })();
 
+
 var pokemon = {
     name:"name",
     getInfo:"info"
 };
+var dialog0 = "Pokemon erscheint";
+var currentText;
+
+function openDialog(dialogBox, dialogNum,line)
+{
+
+	switch(dialogNum)
+	{
+		case 0:
+		currentText= dialog0.split(",");
+		line.setText(dialog0[0]);
+		break;
+		case 1:
+		break;
+		case 2:
+		break;
+	}
+	
+	dialogBox.visible = true;
+	line.visible = true;
+	
+}
+	
+	
 	function writeBattleInfo(enemyText,myText,ai_Pokemon,myPokemon,attk1,attk2,attk3,attk4)
 	{	
 		enemyText.visible = true;
@@ -240,17 +269,19 @@ function over() {
 function out() {
     console.log('button out');
 }
-function actionOnClick() {
-	
-  /*   this.logo.visible = false;
-    this.button.visible = false; */
 
-    this.player.frame = 1;
-    //this.house.visible = true;
-//    this.game.stage.backgroundColor = '#2d2d2d';
-    //  This will check Sprite vs. Sprite collision
-    this.player.name = 'player';
-    //this.house.name = 'house';
+function nextDialogEvent() {
+	
+	if(currentText.length == 1)
+	{
+		this.texBox.visible = false;
+		this.nextDialog.visible = false;
+	}
+	else 
+	{
+		this.text.setText(currentText[1]);
+		currentText.remove(0);
+	}
 }
 window.onload = function () {
     var game = new SimpleGame();
