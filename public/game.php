@@ -19,7 +19,7 @@ if(isset($_SESSION["message"])) echo $_SESSION["message"];
 <head>
 
     <link href="/css/style.css" rel="stylesheet">
-  	<link rel="shortcut icon" type="image/x-icon" href="bilder/pokeball.ico" />
+  	<link rel="shortcut icon" type="image/x-icon" href="assets/pokeball.ico" />
     <title>Poke-Game</title>
 </head>
 <body>

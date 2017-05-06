@@ -29,7 +29,7 @@ include '../pwchange.php';
   <td><input type="password" name="confirmPassword" class="txtField"/><span id="confirmPassword" class="required"></span></td>
   </tr>
   <tr>
-    <td colspan="2"><input type="image" src="bilder/pokeball.png" style="width:150px" alt="Registrieren" name='submit'/>
+    <td colspan="2"><input type="image" src="assets/pokeball.png" style="width:150px" alt="Registrieren" name='submit'/>
     </td>
   </tr>
   </table>

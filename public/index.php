@@ -12,7 +12,7 @@ if(isset($_GET['register'])) {
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="shortcut icon" type="image/x-icon" href="bilder/pokeball.ico" />
+	<link rel="shortcut icon" type="image/x-icon" href="assets/pokeball.ico" />
   <meta charset="UTF-8">
   <title>Pokemon-Game</title>
   <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
@@ -55,7 +55,7 @@ Bei Klick auf Registrieren wird ueber die index.js der signup-Tab geoeffnet und 
 
           <p class="forgot"><a href="../pwvergessen.php">Passwort vergessen?</a></p>
 
-       	  <input type="image" src="bilder/pokeball.png" alt="Anmelden"/>
+       	  <input type="image" src="assets/pokeball.png" alt="Anmelden"/>
 
           </form>
 
@@ -95,7 +95,7 @@ Bei Klick auf Registrieren wird ueber die index.js der signup-Tab geoeffnet und 
             <input type="password" required autocomplete="off" name="passwort2"/>
           </div>
 
-          <input type="image" src="bilder/pokeball.png" style="width:150px" alt="Registrieren" />
+          <input type="image" src="assets/pokeball.png" style="width:150px" alt="Registrieren" />
 
           </form>
 
