@@ -60,7 +60,7 @@ var SimpleGame = (function () {
         leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
         rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
        // this.game.stage.backgroundColor = '#000000';
-
+	   
 		
 		this.text = this.game.add.text(this.texBox.x + 15,this.texBox.y + 5, "", {
         font: "20px Arial",
@@ -68,7 +68,25 @@ var SimpleGame = (function () {
         align: "center"
     });
 	this.text.visible = false;
-		
+	
+			this.enemyText = this.game.add.text(54,72, "Enemy", {
+        font: "20px Arial",
+        fill: "#292929",
+        align: "center"
+    });
+	
+			this.myText = this.game.add.text(420,280, "My Text", {
+        font: "20px Arial",
+        fill: "#292929",
+        align: "center"
+    });	
+
+	
+	this.enemyText.visible = false;
+	this.myText.visible = false;
+
+	
+	//writeBattleInfo(this.enemyText,this.myText,randomPokemon(), loadMyPokemon());
     };
     SimpleGame.prototype.update = function () {
     
@@ -89,7 +107,7 @@ var SimpleGame = (function () {
 				}
 				else if (this.bmd.getPixelRGB(this.player.x - speed, this.player.y + y).r == 0 && this.bmd.getPixelRGB(this.player.x - speed, this.player.y + y).g == 255 && this.bmd.getPixelRGB(this.player.x - speed, this.player.y + y).b == 96)
 				{
-					if(getRndInteger(0,4000) == 1)
+					if(getRndInteger(0,3000) == 1)
 					{	
 						this.text.visible = true;
 						this.texBox.visible = true;
@@ -116,7 +134,7 @@ var SimpleGame = (function () {
 				}
 				else if (this.bmd.getPixelRGB(this.player.x + speed + Math.round(this.player.width), this.player.y + y).r == 0 && this.bmd.getPixelRGB(this.player.x + speed + Math.round(this.player.width), this.player.y + y).g == 255 && this.bmd.getPixelRGB(this.player.x + speed + Math.round(this.player.width), this.player.y + y).b == 96)
 				{
-					if(getRndInteger(0,4000) == 1)
+					if(getRndInteger(0,3000) == 1)
 					{	
 						this.text.visible = true;
 						this.texBox.visible = true;
@@ -181,8 +199,38 @@ var SimpleGame = (function () {
     return SimpleGame;
 })();
 
-
-
+var pokemon = {
+    name:"name",
+    getInfo:"info"
+};
+	function writeBattleInfo(enemyText,myText,ai_Pokemon,myPokemon,attk1,attk2,attk3,attk4)
+	{	
+		enemyText.visible = true;
+		myText.visible = true;
+	
+		enemyText.setText(ai_Pokemon.name + "\n" + ai_Pokemon.getInfo);
+		myText.setText(myPokemon.name + "\n" + myPokemon.getInfo);
+		
+		attk1.visible = true;
+		attk2.visible = true;
+		attk3.visible = true;
+		attk4.visible = true;
+	}
+	
+	function loadMyPokemon() {
+		var load = pokemon;
+		
+		return load;
+		
+		}
+		
+		function randomPokemon() {
+		var ran = pokemon;
+		
+		return ran;
+		
+		}
+	
 function up() {
     console.log('button up', arguments);
 }
