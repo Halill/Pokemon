@@ -5,11 +5,17 @@ if(!isset($_SESSION['userid'])){
 	die();
 }
 include '../loggedin.php';
-//if($_POST['save']) include 'speichern.php';
-//if(!$_SESSION["ausgabe"]) exit("kein Spielstand vorhanden")
-// $link = "spielstand.php";
-// if(isset($_POST["game"])) $link = "PlayerMovement.html";
-$link = "PlayerMovement.html";
+include '../Spielstand_Handler.php';
+$h = NEW Spielstand_Handler();
+if($h->check_spielstand() && isset($_GET['Fortsetzen'])){
+	 $link = "spielstand.php";
+}
+elseif (!$h->check_spielstand()) {
+	 $link = "intro.php";
+}
+else {
+	$link = "PlayerMovement.html";
+}
 if(isset($_POST["change"])) $link = "pwchange.php";
 if(isset($_POST["spielstand"])) $link = "spielstand.php";
 //wird gesetzt, beim Speichern -> speichern.php
