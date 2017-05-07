@@ -4,7 +4,6 @@ include 'config.php';
 /**
  * Das login-Script
  */
-session_start();
 /**
  * Der Uebergebene Username und das Passwort werden gespeichert.
  * Anschliessend wird der Username in ein Prepared Statement uebergeben und die Userdaten abgefragt.
