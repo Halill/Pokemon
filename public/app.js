@@ -59,9 +59,7 @@ var SimpleGame = (function () {
 		this.nextDialog.width /= 2;
 		this.nextDialog.height /= 2;
 		this.nextDialog.visible = false;
-		
-		newPlayer(this.labor,this.map1,this.player,this.prof);
-		
+				
 		
         //Reservieren der Pfeiltasten für das Spiel. Dadurch wird verhindert, dass die Scrollbars der Website nicht darauf reagieren.
         var upKey;
@@ -98,6 +96,8 @@ var SimpleGame = (function () {
 	this.enemyText.visible = false;
 	this.myText.visible = false;
 	this.texBox.visible = false;
+
+	//newPlayer(this.labor,this.map1,this.player,this.prof,this.texBox,this.text,this.nextDialog);
 	
 	//writeBattleInfo(this.enemyText,this.myText,randomPokemon(), loadMyPokemon());
     };
@@ -110,7 +110,7 @@ var SimpleGame = (function () {
 			
 			var isMoveable = 0; 
 			this.prof.frame = 1;
-			
+			getPokemonStk(1);
 			for(var y = 0; y <= Math.round(this.player.height); y++)
 			{
 				if (this.bmd.getPixelRGB(this.player.x - speed, this.player.y + y).r == 0 && this.bmd.getPixelRGB(this.player.x - speed, this.player.y + y).g == 0 && this.bmd.getPixelRGB(this.player.x - speed, this.player.y + y).b == 0)
@@ -207,6 +207,7 @@ var pokemon = {
     getInfo:"info"
 };
 var dialog0 = "Pokemon erscheint,openBattle";
+var dialog1 = "Oh wie ich sehe haben wir einen\rneues Gesicht in der Stadt,Möchtest du dir ein Pokemon aussuchen?,Wir haben 3 zur Auswahl";
 var currentText;
 var dialogIndex;
 
@@ -220,6 +221,9 @@ function openDialog(dialogBox, dialogNum,line, nextButton)
 		line.setText(currentText[dialogIndex]);
 		break;
 		case 1:
+		dialogIndex = 0;
+		currentText= dialog1.split(",");
+		line.setText(currentText[dialogIndex]);
 		break;
 		case 2:
 		break;
@@ -267,15 +271,6 @@ function openDialog(dialogBox, dialogNum,line, nextButton)
 		
 		}
 	
-function up() {
-    console.log('button up', arguments);
-}
-function over() {
-    console.log('button over');
-}
-function out() {
-    console.log('button out');
-}
 
 function nextDialogEvent() {
 	
@@ -297,15 +292,39 @@ function nextDialogEvent() {
 			openFightWindow(this.map1,this.battle,this.player);
 			writeBattleInfo(this.enemyText,this.myText,randomPokemon(), loadMyPokemon());
 		}
+		this.prof.frame = this.prof.frame + 1;
 	}
 }
 
-function newPlayer(labor,town,player,profHalil)
+function newPlayer(labor,town,player,profHalil,chatBox,line,nextDialog)
 {
 	labor.visible = true;
 	profHalil.visible = true;
 	town.visible = false;
 	player.visible = false;
+	line.visible = true;
+	nextDialog.visible = true;
+	openDialog(chatBox,1,line,nextDialog);
+}
+
+function getPokemonStk(num) {
+	
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                alert(this.responseText);
+            }
+        };
+        xmlhttp.open("GET","getPokemonStk.php?q="+num,true);
+        xmlhttp.send();
+        
+    
 }
 
 window.onload = function () {
