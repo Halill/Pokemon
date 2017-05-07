@@ -1,22 +1,28 @@
 <?php
-include '../pwchange.php';
+session_start();
+if(!isset($_SESSION['userid'])) {
+	header("Location: public");
+	die();
+}
 
+include '../passwort_handler.php';
+$h = NEW Passwort_Handler();
+$ausgabe = $h->pwchange();
 ?>
 
 
 <html>
 <head>
+
   <title>Pokemon-Game</title>
+  <link rel="shortcut icon" type="image/x-icon" href="assets/pokeball.ico" />
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <form name="frmChange" method="post" action="" onSubmit="return validatePassword()">
     <div style="width:500px;">
-      <div class="message"><?php if(isset($message)) { echo $message; } ?></div>
+      <div class="message"><?php echo isset($ausgabe) ? htmlentities($ausgabe) : ''; ?></div>
   <table border="0" cellpadding="10" cellspacing="0" width="500" align="center" class="tblSaveForm">
-    <tr class="tableheader">
-      <td colspan="2">Passwort ändern</td>
-    </tr>
     <tr>
       <td width="40%"><label>Aktuelles Passwort</label></td>
       <td width="60%"><input type="password" name="currentPassword" class="txtField"/><span id="currentPassword"  class="required"></span></td>

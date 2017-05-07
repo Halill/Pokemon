@@ -1,6 +1,9 @@
 <?php
 session_start();
-
+if(!isset($_SESSION['userid'])){
+	header("Location: index.php");
+	die();
+}
 include '../loggedin.php';
 //if($_POST['save']) include 'speichern.php';
 //if(!$_SESSION["ausgabe"]) exit("kein Spielstand vorhanden")
@@ -10,8 +13,6 @@ $link = "PlayerMovement.html";
 if(isset($_POST["change"])) $link = "pwchange.php";
 if(isset($_POST["spielstand"])) $link = "spielstand.php";
 //wird gesetzt, beim Speichern -> speichern.php
-if(isset($_SESSION["message"])) echo $_SESSION["message"];
-
 ?>
 
 <!DOCTYPE html>
@@ -27,6 +28,11 @@ if(isset($_SESSION["message"])) echo $_SESSION["message"];
 <div id="game">
 <iframe style="margin: 0 auto;display: block;" src=<?php echo htmlentities($link); ?>  scrolling="no" width="760" height="628"></iframe>
 </div>
+
+<div id="message">
+<?php if(isset($_SESSION["message"])) echo htmlentities($_SESSION["message"]);?>
+</div>
+
 <div id="menue">
 <fieldset style="align:right">
   <legend style="padding:20px;text-align:center">Menü</legend>
@@ -34,7 +40,7 @@ if(isset($_SESSION["message"])) echo $_SESSION["message"];
    <input value="Speichern" type="submit" name="save">
 </form>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-   <input value="Spielstandübersicht" type="submit" name="spielstand">
+   <input value="Spielstandübersicht" type="submit" <?php if($_SESSION['ausgabe']) {echo htmlentities("disabled");}?> name="spielstand">
 </form>
 <form method="post" action="logout.php">
   <input value="Logout" type="submit" name="sent" align="right">

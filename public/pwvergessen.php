@@ -1,11 +1,11 @@
-<?php include '../pwvergessen.php'
-if(){
-
-
+<?php
+session_start();
+if(isset($_POST['email'])){
+	include '../passwort_handler.php';
+    $h = NEW Passwort_Handler();
+    $ausgabe = $h->send_pwforgotmail();
 }
-
-
- ?>
+?>
 
 <!DOCTYPE html>
 <html>
@@ -15,8 +15,7 @@ if(){
   <title>Pokemon-Game</title>
   <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-
-      <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -32,7 +31,8 @@ if(){
 
 <!-- Hier beginnt die Passwort-vergessen-Seite -->
        <div id="pw">
-          <h1>Passwort vergessen!</h1>
+       <h1><?php if(isset($ausgabe)) echo htmlentities($ausgabe); 
+   				 else echo htmlentities("Passwort vergessen!");?></h1>
           <br><br>
           <form action="?email=1" method="post">
 
@@ -42,13 +42,11 @@ if(){
             </label>
             <input type="email" name="email" value="<?php echo isset($_POST['email']) ? htmlentities($_POST['email']) : ''; ?>">
           </div>
-
-       		<input type="image" src="assets/pokeball.png" alt="Passwort anfordern" action=<?php send_pwforgotmail(); ?>/>
-
+       		<input type="image" src="assets/pokeball.png" alt="Passwort anfordern"/>
           </form>
 		</div>
     <div id="login">
-       <h1>Willkommen!</h1>
+    
 
        <form action="?login=1" method="post">
 
@@ -75,9 +73,10 @@ if(){
      </div>
 </div>
 </div> <!-- /form -->
-  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
-    <script src="js/pw.js"></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+<script src="js/pw.js"></script>
 
 </body>
 </html>

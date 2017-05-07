@@ -1,4 +1,9 @@
 <?php
+session_start();
+if(isset($_SESSION['userid'])){
+	header("Location: game.php");
+	die();
+}
 if(isset($_GET['login'])) {
 	include '../login.php';
 }
@@ -53,7 +58,7 @@ Bei Klick auf Registrieren wird ueber die index.js der signup-Tab geoeffnet und 
             <input type="password" name="passwort"/>
           </div>
 
-          <p class="forgot"><a href="../pwvergessen.php">Passwort vergessen?</a></p>
+          <p class="forgot"><a href="pwvergessen.php">Passwort vergessen?</a></p>
 
        	  <input type="image" src="assets/pokeball.png" alt="Anmelden"/>
 
