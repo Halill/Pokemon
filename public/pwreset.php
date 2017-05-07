@@ -4,8 +4,6 @@ $h = NEW Passwort_Handler();
 $ausgabe = $h->pwreset();
 echo $ausgabe;
 
-
-
 ?>
 
 <!DOCTYPE html>
@@ -32,14 +30,14 @@ echo $ausgabe;
 
        <div class="field-wrap">
        <label>
-         neues Passwort:<span class="req">*</span>
+         Neues Passwort:<span class="req">*</span>
        </label>
        <input type="password" name="passwort"/>
      </div>
 
      <div class="field-wrap">
        <label>
-         Passwort erneut eingeben:<span class="req">*</span>
+         Passwort bestätigen:<span class="req">*</span>
        </label>
        <input type="password" name="passwort2"/>
      </div>

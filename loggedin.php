@@ -9,18 +9,20 @@ include 'config.php';
 if(!isset($_SESSION['userid'])) {
 	header("Location: public");
 }
-
-//Abfrage der Nutzer ID vom Login
-$userid = $_SESSION['userid'];
-$statement = $pdo->prepare("SELECT * FROM spielstand WHERE spielerid = :id");
-$result = $statement->execute(array('id' => $userid));
-$spielstand = $statement->fetch();
-if(empty($spielstand)){
-	$ausgabe = true;
-	$_SESSION['ausgabe'] = $ausgabe;
-}
 else {
-	$ausgabe =  false;
-	$_SESSION['ausgabe'] = $ausgabe;
+	//Abfrage der Nutzer ID vom Login
+	$userid = $_SESSION['userid'];
+	$statement = $pdo->prepare("SELECT * FROM spielstand WHERE spielerid = :id");
+	$result = $statement->execute(array('id' => $userid));
+	$spielstand = $statement->fetch();
+	if(empty($spielstand)){
+		$ausgabe = true;
+		$_SESSION['ausgabe'] = $ausgabe;
+	}
+	else {
+		$ausgabe =  false;
+		$_SESSION['ausgabe'] = $ausgabe;
+	}
 }
+
 ?>

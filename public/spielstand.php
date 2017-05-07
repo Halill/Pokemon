@@ -1,5 +1,8 @@
 <?php
 session_start();
+if(!isset($_SESSION['userid'])) {
+	header("Location: index.php");
+}
 include '../spielstand.php';
  ?>
  <!DOCTYPE html>
@@ -13,7 +16,7 @@ include '../spielstand.php';
 <?php
 
 for ($i=0; $i < sizeof($spielstand); $i++) {
-    echo $spielstand[$i]."\n";
+	echo htmlentities($spielstand[$i]."\n");
 }
 
   ?>
