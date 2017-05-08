@@ -96,8 +96,7 @@ var SimpleGame = (function () {
 	this.myText.visible = false;
 	this.texBox.visible = false;
 	
-	getPokemonInfo();
-
+			setUp(this.myText,this.enemyText);
 	//newPlayer(this.labor,this.map1,this.player,this.prof,this.texBox,this.text,this.nextDialog);
 	
 	//writeBattleInfo(this.enemyText,this.myText,randomPokemon(), loadMyPokemon());
@@ -203,14 +202,20 @@ var SimpleGame = (function () {
 })();
 
 
-var pokemon = {
-    name:"name",
-    getInfo:"info"
-};
+var myPokemon;
+var myText;
+var enemyText;
 var dialog0 = "Pokemon erscheint,openBattle";
 var dialog1 = "Oh wie ich sehe haben wir einen\rneues Gesicht in der Stadt,Möchtest du dir ein Pokemon aussuchen?,Wir haben 3 zur Auswahl";
 var currentText;
 var dialogIndex;
+
+function setUp(myT,enemyT)
+{
+	myText = myT;
+	enemyText = enemyT;
+	loadMyPokemon();
+}
 
 function openDialog(dialogBox, dialogNum,line, nextButton)
 {
@@ -241,15 +246,16 @@ function openDialog(dialogBox, dialogNum,line, nextButton)
 		mapPic.visible = false;
 		player.visible = false;
 		battlePic.visible = true;
+		randomPokemon();
 	}
 	
-	function writeBattleInfo(enemyText,myText,ai_Pokemon,myPokemon /* ,attk1,attk2,attk3,attk4 */)
+	function writeBattleInfo(ai_Pokemon /* ,attk1,attk2,attk3,attk4 */)
 	{	
 		enemyText.visible = true;
 		myText.visible = true;
-	
-		enemyText.setText(ai_Pokemon.name + "\n" + ai_Pokemon.getInfo);
-		myText.setText(myPokemon.name + "\n" + myPokemon.getInfo);
+
+		enemyText.setText(ai_Pokemon.pokename + "\nKP:" + ai_Pokemon.kp);
+		myText.setText(myPokemon.pokename + "\nKP:" + myPokemon.kp);
 		
 	/*	attk1.visible = true;
 		attk2.visible = true;
@@ -259,17 +265,45 @@ function openDialog(dialogBox, dialogNum,line, nextButton)
 	}
 	
 	function loadMyPokemon() {
-		var load = pokemon;
-		
-		return load;
+       if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            	var json = JSON.parse(this.responseText);
+            	var objJSON = eval("(function(){return " + json + ";})()");
+            	myPokemon = objJSON;
+            }
+        };
+        xmlhttp.open("GET","get_Pokemon.php",true);
+        xmlhttp.send();
 		
 		}
 		
 		function randomPokemon() {
-		var ran = pokemon;
-		
-		return ran;
-		
+			
+       if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            	var json = JSON.parse(this.responseText);
+            	var objJSON = eval("(function(){return " + json + ";})()");
+            	writeBattleInfo(objJSON);
+            }
+        };
+        xmlhttp.open("GET","get_Pokemon_AI.php",true);
+        xmlhttp.send();
+   
+
 		}
 	
 
@@ -291,7 +325,6 @@ function nextDialogEvent() {
 			this.nextDialog.visible = false;
 			this.text.visible = false;	
 			openFightWindow(this.map1,this.battle,this.player);
-			writeBattleInfo(this.enemyText,this.myText,randomPokemon(), loadMyPokemon());
 		}
 		this.prof.frame = this.prof.frame + 1;
 	}
@@ -308,25 +341,6 @@ function newPlayer(labor,town,player,profHalil,chatBox,line,nextDialog)
 	openDialog(chatBox,1,line,nextDialog);
 }
 
-function getPokemonInfo() {
-	
-       if (window.XMLHttpRequest) {
-            // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-            	var json = JSON.parse(this.responseText);
-            	alert(json.kp);
-            }
-        };
-        xmlhttp.open("GET","getPokemonStk.php",true);
-        xmlhttp.send();
-   
-}
 
 window.onload = function () {
     var game = new SimpleGame();
