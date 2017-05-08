@@ -4,10 +4,6 @@ if(isset($_SESSION['userid'])){
 	header("Location: game.php");
 	die();
 }
-if(!isset($_SESSION['userid'])){
-	header("Location: index.php");
-	die();
-}
 include '../session_handler.php';
 $handler = NEW Session();
 if(isset($_GET['login'])) {
