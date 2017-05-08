@@ -59,17 +59,15 @@ class Spielstand_Handler
     $stmt = $pdo->prepare("SELECT * FROM spielstand WHERE spielerid = :userid");
     $stmt->bindParam(':userid', $_SESSION['userid']);
     $spielstand = $stmt->execute();
-    $spielstand = $stmt->fetch();
+    $spielstand = $stmt->fetchAll();
 
     return $spielstand;
 
   }
   function check_spielstand(){
     include 'config.php';
-
-    $userid = $_SESSION['userid'];
     $statement = $pdo->prepare("SELECT * FROM spielstand WHERE spielerid = :id");
-    $result = $statement->execute(array('id' => $userid));
+    $result = $statement->execute(array('id' => $_SESSION['userid']));
     $result = $statement->fetch();
     if($result) return true;
     else {

@@ -7,7 +7,7 @@ if(!isset($_SESSION['userid'])){
 include '../loggedin.php';
 include '../Spielstand_Handler.php';
 $h = NEW Spielstand_Handler();
-if($h->check_spielstand() && isset($_GET['Fortsetzen'])){
+if($h->check_spielstand() && !isset($_GET['Fortsetzen'])){
 	 $link = "spielstand.php";
 }
 elseif (!$h->check_spielstand()) {

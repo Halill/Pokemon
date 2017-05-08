@@ -1,12 +1,13 @@
 <?php
 session_start();
-$q = intval($_GET['q']);
+include '../config.php';
+include '../spielstand_Handler.php';
+$spielstand_check = Spielstand_Handler::check_spielstand();
 
-if(isset($_SESSION['userid'])) {
-	if(isset($_POST['save'])){
-		
-  }
-}
+$json = '{
+	"spielstand_check": '.$spielstand_check.',
+}'
+echo json_decode($json);
 
-echo $q;
+
 ?>
