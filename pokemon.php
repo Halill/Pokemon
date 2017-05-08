@@ -66,7 +66,7 @@ class Pokemon{
     }';
     return $json;
   }
-
+  
   function get_random_pokemon(){
     include 'config.php';
 
@@ -125,15 +125,6 @@ class Pokemon{
       "pfad": "'.$pfad.'"
     }';
     return $json;
-
-
-
   }
-
-
-
 }
-
-
-
- ?>
+?>
