@@ -175,37 +175,65 @@ class Passwort_Handler
 	/**
 	 * Passwortändern-Funktion
 	 * Nimmt die ID aus der Session-Variablen und überprüft das eingebene currentPassword mit dem in der DB hinterlegten.
-	 * Bei richtigem Passwort wird die Übereinstimmung des neuen Passworts überprüft und anschließend geändert. 
-	 * @return Messagestring
+	 * Anschließend wird zunächst überprüft, ob newpassword und confirmpassword eingegeben wurden, welche bei Übereinstimmung als neues Passwort gesetzt werden.
+	 * Analog wird die E-Mailadresse überprüft und geändert.
+	 * @return Ergebnisstring
 	 */
 	function pwchange() {
 		include 'config.php';
 		if(isset($_SESSION['userid'])){
 			try {
 				if(count($_POST)>0) {
-					$statement = $pdo->prepare("SELECT * FROM users WHERE userId= :userid");
+					$statement = $pdo->prepare("SELECT * FROM users WHERE ID = :userid");
 					$result = $statement->execute(array('userid' => $_SESSION['userid']));
 					$user = $statement->fetch();
-					
+					print "1";
 					if(password_verify($_POST['currentPassword'], $user['passwort'])){
-						if($_POST['newpassword'] == $_POST['confirmpassword']){
-							$statement = $pdo->prepare("UPDATE users set password=':newpassword' WHERE userId='" . $_SESSION['userid'] . "'");
-							$statement->execute(array('newpassword' => $_POST['newPassword'], 'userid' => $_SESSION['userid']));
-							return "Das Passwort wurde erfolgreich geändert.";
+						print "2";
+						$pwchange = false;
+						$emailchange = false;
+						
+						// Passwort ändern
+						if(isset($_POST['newPassword']) && isset($_POST['confirmPassword'])){
+							try {
+								
+								print "in pw change";
+								if(!empty($_POST['newPassword']) && $_POST['newPassword'] == $_POST['confirmPassword']){
+									$statement = $pdo->prepare("UPDATE users set password=':newpassword' WHERE ID =':userid'");
+									$statement->execute(array('newpassword' => $_POST['newPassword'], 'userid' => $_SESSION['userid']));
+									$pwchange = true;
+									print "pwchange auf true";
+								}
+							} catch (Exception $e) {
+								print "error in pwchange";
+								return "Ein Fehler ist aufgetreten.";
+							}
 						}
-						else return "Die Passwörter stimmten nicht überein.";
+						
+						print "3";
+						//E-Mail ändern
+						if(isset($_POST['newemail']) && isset($_POST['confirmemail'])){
+							try {
+								if(!empty($_POST['newemail']) && $_POST['newemail'] == $_POST['confirmemail']){
+									$statement = $pdo->prepare("UPDATE users set email=':newemail' WHERE userId='" . $_SESSION['userid'] . "'");
+									$statement->execute(array('newemail' => $_POST['newemail'], 'userid' => $_SESSION['userid']));
+									$emailchange = true;
+								}
+							} catch (Exception $e) {
+								return "Ein Fehler ist aufgetreten.";
+							}	
+						}
+						print "4";
+						session_regenerate_id();
+						print "5";
+						if (!$pwchange && !$emailchange) return "Bitte versuchen Sie es erneut.";
+						else return "Die Benutzerdaten wurden aktualisiert.";
 					}
 					else return "Das aktuelle Passwort war fehlerhaft.";
 				}
 			} catch (Exception $e) {
-				return "Ein Fehler ist aufgetreten.";
 			}
-		}
-		else "Es ist ein Fehler aufgetreten.";
-		
-		
+		}	
 	}
-	
-
 }
 ?>
