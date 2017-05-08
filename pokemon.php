@@ -66,12 +66,12 @@ class Pokemon{
     }';
     return $json;
   }
-  
+
   function get_random_pokemon(){
     include 'config.php';
-
+    $random = rand(1,3);
     $stmt = $pdo->prepare("SELECT pokename, kp, staerke, att1, att2, att3,att4, pfad FROM pokemon WHERE id = :pokemonid");
-    $stmt->bindParam(':pokemonid', rand(1,3));
+    $stmt->bindParam(':pokemonid', $random);
     $result = $stmt->execute();
     $pokemon = $stmt->fetch();
 
@@ -110,7 +110,6 @@ class Pokemon{
     $pfad = $pokemon[7];
 
     $json = '{
-      "spielstand_check": '.$spielstand_check.',
       "pokename": "'.$pokename.'",
       "kp": '.$kp.',
       "staerke": '.$staerke.',
