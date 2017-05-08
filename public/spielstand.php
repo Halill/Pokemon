@@ -25,8 +25,10 @@ if(isset($_GET['neu_spielstand'])){
 
 for ($i=0; $i < sizeof($spielstand); $i++) {
 	if(isset($spielstand[$i])){
-		echo htmlentities($spielstand[$i]."\n");
-
+		for ($j=0; $j < sizeof($spielstand); $j++) {
+			echo $spielstand[$i][$j];
+		}
+		//echo htmlentities($spielstand[$i]."\n");
 	}
 }
 ?>

@@ -318,12 +318,12 @@ function getPokemonStk(num) {
         }
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                alert(this.responseText);
+            	var json = JSON.stringify(this.responseText);
+            	alert(json);
             }
         };
-        xmlhttp.open("GET","getPokemonStk.php,true);
+        xmlhttp.open("GET","getPokemonStk.php",true);
         xmlhttp.send();
-  
    
 }
 
