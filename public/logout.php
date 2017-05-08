@@ -1,5 +1,13 @@
 <?php
-include '../logout.php'
+session_start();
+if(!isset($_SESSION['userid'])){
+	header("Location: index.php");
+	die();
+}
+include '../session_handler.php';
+$handler = NEW Session();
+
+$erfolgreich = $handler->logout();
 ?>
 <html>
 <head>
@@ -8,7 +16,7 @@ include '../logout.php'
   <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
-  <?php 
+  <?php
   if($erfolgreich) header("Location: index.php");?>
 </body>
 </html>

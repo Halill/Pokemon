@@ -5,7 +5,7 @@ if(!isset($_SESSION['userid'])){
 	die();
 }
 else {
-	include '../pokemon.php';
+	include '../pokemon_handler.php';
 	$json_user_pokemon = Pokemon::get_pokemon_in_json();
 	echo json_encode($json_user_pokemon);
 

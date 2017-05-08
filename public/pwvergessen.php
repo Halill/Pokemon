@@ -1,5 +1,9 @@
 <?php
 session_start();
+if(!isset($_SESSION['userid'])){
+	header("Location: index.php");
+	die();
+}
 if(isset($_POST['email'])){
 	include '../passwort_handler.php';
     $h = NEW Passwort_Handler();
@@ -31,7 +35,7 @@ if(isset($_POST['email'])){
 
 <!-- Hier beginnt die Passwort-vergessen-Seite -->
        <div id="pw">
-       <h1><?php if(isset($ausgabe)) echo htmlentities($ausgabe); 
+       <h1><?php if(isset($ausgabe)) echo htmlentities($ausgabe);
    				 else echo htmlentities("Passwort vergessen!");?></h1>
           <br><br>
           <form action="?email=1" method="post">
@@ -46,7 +50,7 @@ if(isset($_POST['email'])){
           </form>
 		</div>
     <div id="login">
-    
+
 
        <form action="?login=1" method="post">
 

@@ -1,5 +1,9 @@
 <?php
 session_start();
+if(!isset($_SESSION['userid'])){
+	header("Location: index.php");
+	die();
+}
 include '../spielstand_Handler.php';
 $handler = NEW Spielstand_Handler();
 $spielstand = $handler->spielstand_laden();

@@ -4,12 +4,21 @@ if(isset($_SESSION['userid'])){
 	header("Location: game.php");
 	die();
 }
-if(isset($_GET['login'])) {
-	include '../login.php';
+if(!isset($_SESSION['userid'])){
+	header("Location: index.php");
+	die();
 }
-
+include '../session_handler.php';
+$handler = NEW Session();
+if(isset($_GET['login'])) {
+	$error = Session::login();
+	if(isset($error)){
+		echo htmlentities($error);
+	}
+}
 if(isset($_GET['register'])) {
-	include '../register.php';
+	$ausgabe = Session::register();
+	echo htmlentities($ausgabe);
 }
 ?>
 

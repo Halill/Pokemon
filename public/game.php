@@ -4,7 +4,6 @@ if(!isset($_SESSION['userid'])){
 	header("Location: index.php");
 	die();
 }
-include '../loggedin.php';
 include '../Spielstand_Handler.php';
 $h = NEW Spielstand_Handler();
 if($h->check_spielstand() && !isset($_GET['Fortsetzen'])){
@@ -46,13 +45,13 @@ if(isset($_POST["spielstand"])) $link = "spielstand.php";
    <input value="Speichern" type="submit" name="save">
 </form>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-   <input value="Spielstandübersicht" type="submit" <?php if($_SESSION['ausgabe']) {echo htmlentities("disabled");}?> name="spielstand">
+   <input value="Spielstandübersicht" type="submit" name="spielstand">
 </form>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
   <input value="Benutzerverwaltung" type="submit" name="change">
 </form>
 <form method="post" action="logout.php">
-  <input value="Logout" type="submit" name="sent" align="right">
+  <input value="Logout" type="submit" name="logout" align="right">
 </form>
 </div>
 </div>
