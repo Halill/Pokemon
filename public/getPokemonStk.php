@@ -9,9 +9,8 @@ $stmt->bindParam(':userid', $_SESSION['userid']);
 $result = $stmt->execute();
 $pokemonid = $stmt->fetch();
 
-$pokemonid
 $stmt = $pdo->prepare("SELECT pokename, kp, staerke, att1, att2, att3,att4, pfad FROM pokemon WHERE id = :pokemonid");
-$stmt->bindParam(':pokemonid', $pokemonid);
+$stmt->bindParam(':pokemonid', $pokemonid[0]);
 $result = $stmt->execute();
 $pokemon = $stmt->fetch();
 
@@ -57,13 +56,13 @@ $json = '{
 	"pokename": "'.$pokename.'",
 	"kp": '.$kp.',
 	"staerke": '.$staerke.',
-	"attname1": "'.$attname1'.",
+	"attname1": "'.$attname1.'",
 	"attschaden1": '.$attschaden1.',
-	"attname2": "'.$attname2'.",
+	"attname2": "'.$attname2.'",
 	"attschaden2": '.$attschaden2.',
-	"attname3": "'.$attname3'.",
+	"attname3": "'.$attname3.'",
 	"attschaden3": '.$attschaden3.',
-	"attname4": "'.$attname4'.",
+	"attname4": "'.$attname4.'",
 	"attschaden4": '.$attschaden4.',
 	"pfad": "'.$pfad.'"
 }';

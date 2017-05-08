@@ -96,6 +96,7 @@ var SimpleGame = (function () {
 	this.myText.visible = false;
 	this.texBox.visible = false;
 	
+	getPokemonInfo();
 
 	//newPlayer(this.labor,this.map1,this.player,this.prof,this.texBox,this.text,this.nextDialog);
 	
@@ -110,7 +111,7 @@ var SimpleGame = (function () {
 			
 			var isMoveable = 0; 
 			this.prof.frame = 1;
-			getPokemonStk(1);
+			
 			for(var y = 0; y <= Math.round(this.player.height); y++)
 			{
 				if (this.bmd.getPixelRGB(this.player.x - speed, this.player.y + y).r == 0 && this.bmd.getPixelRGB(this.player.x - speed, this.player.y + y).g == 0 && this.bmd.getPixelRGB(this.player.x - speed, this.player.y + y).b == 0)
@@ -307,7 +308,7 @@ function newPlayer(labor,town,player,profHalil,chatBox,line,nextDialog)
 	openDialog(chatBox,1,line,nextDialog);
 }
 
-function getPokemonStk(num) {
+function getPokemonInfo() {
 	
        if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -318,8 +319,8 @@ function getPokemonStk(num) {
         }
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-            	var json = JSON.stringify(this.responseText);
-            	alert(json);
+            	var json = JSON.parse(this.responseText);
+            	alert(json.kp);
             }
         };
         xmlhttp.open("GET","getPokemonStk.php",true);
