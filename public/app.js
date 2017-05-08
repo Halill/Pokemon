@@ -104,13 +104,13 @@ var SimpleGame = (function () {
     SimpleGame.prototype.update = function () {
     
     var speed = 2;
-	if(this.map1.visible == true)
+	if(this.map1.visible == true && this.texBox.visible == false)
 	{
 	if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 			
 			var isMoveable = 0; 
 			this.prof.frame = 1;
-			getPokemonStk(1);
+			
 			for(var y = 0; y <= Math.round(this.player.height); y++)
 			{
 				if (this.bmd.getPixelRGB(this.player.x - speed, this.player.y + y).r == 0 && this.bmd.getPixelRGB(this.player.x - speed, this.player.y + y).g == 0 && this.bmd.getPixelRGB(this.player.x - speed, this.player.y + y).b == 0)
@@ -309,7 +309,7 @@ function newPlayer(labor,town,player,profHalil,chatBox,line,nextDialog)
 
 function getPokemonStk(num) {
 	
-        if (window.XMLHttpRequest) {
+   /*     if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();
         } else {
@@ -324,7 +324,7 @@ function getPokemonStk(num) {
         xmlhttp.open("GET","getPokemonStk.php?q="+num,true);
         xmlhttp.send();
         
-    
+    */
 }
 
 window.onload = function () {
