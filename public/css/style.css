@@ -4,7 +4,7 @@
 
 html {
   overflow: hidden;
-  background: url(/assets/background.jpg) no-repeat center center fixed;
+  background: url(../assets/background.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -132,6 +132,9 @@ input[type=image]{
 	width: 200px;
 	display: block;
     margin: auto;
+}
+table.tblSaveForm label {
+	position: relative;
 }
 
 textarea {
