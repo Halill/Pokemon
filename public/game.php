@@ -48,11 +48,11 @@ if(isset($_POST["spielstand"])) $link = "spielstand.php";
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
    <input value="Spielstandübersicht" type="submit" <?php if($_SESSION['ausgabe']) {echo htmlentities("disabled");}?> name="spielstand">
 </form>
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+  <input value="Benutzerverwaltung" type="submit" name="change">
+</form>
 <form method="post" action="logout.php">
   <input value="Logout" type="submit" name="sent" align="right">
-</form>
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-  <input value="Passwort ändern" type="submit" name="change">
 </form>
 </div>
 </div>
