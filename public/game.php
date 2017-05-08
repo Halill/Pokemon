@@ -32,7 +32,7 @@ if(isset($_POST["spielstand"])) $link = "spielstand.php";
 <body>
 <div id="wrapper">
 <div id="game">
-<iframe style="margin: 0 auto;display: block;" src=<?php echo htmlentities($link); ?>  scrolling="no" width="760" height="628"></iframe>
+<iframe style="margin: 0 auto;display: block;" src=<?php echo htmlentities($link); ?>  scrolling="no" width="760" height="628" frameBorder="0"></iframe>
 </div>
 
 <div id="message">

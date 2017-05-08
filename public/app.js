@@ -59,7 +59,6 @@ var SimpleGame = (function () {
 		this.nextDialog.width /= 2;
 		this.nextDialog.height /= 2;
 		this.nextDialog.visible = false;
-				
 		
         //Reservieren der Pfeiltasten für das Spiel. Dadurch wird verhindert, dass die Scrollbars der Website nicht darauf reagieren.
         var upKey;
@@ -96,21 +95,22 @@ var SimpleGame = (function () {
 	this.enemyText.visible = false;
 	this.myText.visible = false;
 	this.texBox.visible = false;
+	
 
 	//newPlayer(this.labor,this.map1,this.player,this.prof,this.texBox,this.text,this.nextDialog);
 	
 	//writeBattleInfo(this.enemyText,this.myText,randomPokemon(), loadMyPokemon());
     };
-    SimpleGame.prototype.update = function () {
-    
-    var speed = 2;
+    SimpleGame.prototype.update = function () {      
+
 	if(this.map1.visible == true && this.texBox.visible == false)
 	{
+	var speed = 2;
 	if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 			
 			var isMoveable = 0; 
 			this.prof.frame = 1;
-			
+			getPokemonStk(1);
 			for(var y = 0; y <= Math.round(this.player.height); y++)
 			{
 				if (this.bmd.getPixelRGB(this.player.x - speed, this.player.y + y).r == 0 && this.bmd.getPixelRGB(this.player.x - speed, this.player.y + y).g == 0 && this.bmd.getPixelRGB(this.player.x - speed, this.player.y + y).b == 0)
@@ -309,7 +309,7 @@ function newPlayer(labor,town,player,profHalil,chatBox,line,nextDialog)
 
 function getPokemonStk(num) {
 	
-   /*     if (window.XMLHttpRequest) {
+       if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();
         } else {
@@ -321,10 +321,10 @@ function getPokemonStk(num) {
                 alert(this.responseText);
             }
         };
-        xmlhttp.open("GET","getPokemonStk.php?q="+num,true);
+        xmlhttp.open("GET","getPokemonStk.php,true);
         xmlhttp.send();
-        
-    */
+  
+   
 }
 
 window.onload = function () {
