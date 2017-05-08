@@ -17,6 +17,7 @@ else {
 }
 if(isset($_POST["change"])) $link = "pwchange.php";
 if(isset($_POST["spielstand"])) $link = "spielstand.php";
+if(isset($_POST["ranking"])) $link = "ranking.php";
 //wird gesetzt, beim Speichern -> speichern.php
 ?>
 
@@ -49,6 +50,9 @@ if(isset($_POST["spielstand"])) $link = "spielstand.php";
 </form>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
   <input value="Benutzerverwaltung" type="submit" name="change">
+</form>
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+  <input value="Ranking" type="submit" name="ranking">
 </form>
 <form method="post" action="logout.php">
   <input value="Logout" type="submit" name="logout" align="right">

@@ -125,10 +125,35 @@ class Spielstand_Handler
     else {
       return false;
     }
+  }
+  function ranking(){
+    include 'config.php';
+    $statement = $pdo->prepare("SELECT spielerid, pokemon,score FROM spielstand ORDER BY score DESC");
+    $result = $statement->execute();
+    $result = $statement->fetchAll();
 
+    for ($i=0; $i < sizeof($result); $i++) {
+      $stmt = $pdo->prepare("SELECT username FROM users WHERE ID=:userid");
+      $stmt->bindParam(':userid', $result[$i][0]);
+      $name = $stmt->execute();
+      $name = $stmt->fetch();
+      $result[$i][0] = $name[0];
+
+      $stmt = $pdo->prepare("SELECT pokename FROM pokemon WHERE id=:id");
+      $stmt->bindParam(':id', $result[$i][1]);
+      $pokename = $stmt->execute();
+      $pokename = $stmt->fetch();
+      $result[$i][1] = $pokename[0];
+
+    }
+      return $result;
 
 
   }
+
+
+
+
 }
 
 

@@ -54,7 +54,7 @@ if(isset($_GET['neu_spielstand'])){
 </table>
 </div>
 <div id="button">
-<table>
+<table id="button">
 <tr>
 <td>
 <form action="?Fortsetzen=1" method="post">
@@ -69,7 +69,7 @@ if(isset($_GET['neu_spielstand'])){
 </tr>
 <tr>
 	<td>
-		Fortsetzen      
+		Fortsetzen
 	</td>
 	<td>
 		Spielstand anlegen

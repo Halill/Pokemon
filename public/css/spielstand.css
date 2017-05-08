@@ -3,22 +3,45 @@
   background-color: white;
   text-align: left;
   font-size: 48px;
-  border-color: green;
-  border-width: 5px;
-  border-style: solid;
+
 }
 #button{
   font-family: 'Titillium Web', sans-serif;
   font-size: 48px;
   text-align: center;
     background-color: white;
-  border-color: green;
-  border-width: 5px;
-  border-style: solid;
+
 }
-table {
-       width:100%;
-     }
+#ranking {
+    font-family: 'Titillium Web', sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#ranking  td, #ranking  th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#ranking tr {
+    background-color: white;
+    color: black;
+}
+
+#ranking  tr:hover {background-color: #ddd;}
+
+#ranking  th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+#button {
+    font-family: 'Titillium Web', sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
 input[type=image]{
 	width: 200px;
 
