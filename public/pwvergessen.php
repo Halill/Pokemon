@@ -1,9 +1,5 @@
 <?php
 session_start();
-if(!isset($_SESSION['userid'])){
-	header("Location: index.php");
-	die();
-}
 if(isset($_POST['email'])){
 	include '../passwort_handler.php';
     $h = NEW Passwort_Handler();

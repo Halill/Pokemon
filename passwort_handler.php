@@ -68,17 +68,17 @@ class Passwort_Handler
 							$statement = $pdo->prepare("UPDATE users SET passwortcode = :passwortcode, passwortcode_time = NOW() WHERE id = :userid");
 							$result = $statement->execute(array('passwortcode' => sha1($passwortcode), 'userid' => $user['ID']));
 							$url_passwortcode = 'http://localhost/pwreset.php?userid='.$user['ID'].'&code='.$passwortcode;
-							
+
 							// Hier wird der Mailtext erstellt
 							define('BODY','Hallo '.$user['username'].',
 		fuer deinen Pokemon-Account wurde nach einem neuen Passwort gefragt. Um ein neues Passwort zu vergeben, rufe innerhalb der naechsten 24 Stunden die folgende Website auf:
 		'.$url_passwortcode.'
-									
+
 		Sollte dir dein Passwort wieder eingefallen sein oder hast du dies nicht angefordert, kannst du diese E-Mail einfach ignorieren.
-									
+
 		Liebe Gruesse,
 		dein Pokemon-Team');
-							
+
 							// Hier werden die Daten zum Versenden der Mail definiert und vorbereitet
 							$headers = array (
 									'From' => 'poke.game@web.de',
@@ -92,10 +92,10 @@ class Passwort_Handler
 									'password' => 'pokemon01'
 							);
 							$mail = Mail::factory('smtp', $smtpParams);
-							
+
 							// Hier wird die Mail versendet
 							$result = $mail->send($user['email'], $headers, BODY);
-							
+
 							if (PEAR::isError($result)) {
 								$error = "Die E-Mail konnte nicht versendet werden. " .$result->getMessage();
 							} else {
@@ -105,13 +105,13 @@ class Passwort_Handler
 						}
 					}
 				}
-				
+
 				return $error;
 			} catch (Exception $e) {
 				return "Ein Fehler ist aufgetreten.";
 			}
 	}
-	
+
 	/**
 	 * Versucht das Passwort mithilfe des in der URL eingegeben Codes zurückzusetzen.
 	 * Es wird eine Fehler- oder Erfolgsmeldung als String zurückgegeben.
@@ -123,44 +123,43 @@ class Passwort_Handler
   		if(!isset($_GET['userid']) || !isset($_GET['code'])) {
   			return "Leider wurde kein Code zum Zurücksetzen deines Passworts übermittelt";
   		}
-  		
+
   		$userid = $_GET['userid'];
   		$code = $_GET['code'];
-  		
+
   		//Abfrage des Nutzers
   		$statement = $pdo->prepare("SELECT * FROM users WHERE id = :userid");
   		$result = $statement->execute(array('userid' => $userid));
   		$user = $statement->fetch();
-  		
+
   		//Überprüfe dass ein Nutzer gefunden wurde und dieser auch ein Passwortcode hat
   		if($user === null || $user['passwortcode'] === null) {
   			return "Es wurde kein passender Benutzer gefunden";
   		}
-  		
+
   		//Überprüfe, ob ein gültiger Code in der Datenbank hinterlegt ist.
   		if($user['passwortcode_time'] === null || strtotime($user['passwortcode_time']) < (time()-24*3600) ) {
   			return "Dein Code ist leider abgelaufen";
   		}
-  		
-  		
+
+
   		//Überprüfe den Passwortcode
   		if(sha1($code) != $user['passwortcode']) {
   			return "Der übergebene Code war ungültig. Stell sicher, dass du den genauen Link in der URL aufgerufen hast.";
   		}
-  		
+
   		//Der Code war korrekt, der Nutzer darf ein neues Passwort eingeben
-  		
+
   		if(isset($_GET['send'])) {
   			$passwort = $_POST['passwort'];
   			$passwort2 = $_POST['passwort2'];
-  			
+
   			if($passwort != $passwort2){
   				return $error = "Bitte identische Passwörter eingeben";
   			} else { //Speichere neues Passwort und lösche den Code
   				$passworthash = password_hash($passwort, PASSWORD_DEFAULT);
   				$statement = $pdo->prepare("UPDATE users SET passwort = :passworthash, passwortcode = NULL, passwortcode_time = NULL WHERE id = :userid");
   				$result = $statement->execute(array('passworthash' => $passworthash, 'userid'=> $userid ));
-  				
   				if($result) {
   					return "Dein Passwort wurde erfolgreich geändert";
   				}
@@ -169,9 +168,9 @@ class Passwort_Handler
   	} catch (Exception $e) {
   		return "Ein Fehler ist aufgetreten.";
   	}
-		
+
   }
-  
+
 	/**
 	 * Passwortändern-Funktion
 	 * Nimmt die ID aus der Session-Variablen und überprüft das eingebene currentPassword mit dem in der DB hinterlegten.
@@ -187,45 +186,41 @@ class Passwort_Handler
 					$statement = $pdo->prepare("SELECT * FROM users WHERE ID = :userid");
 					$result = $statement->execute(array('userid' => $_SESSION['userid']));
 					$user = $statement->fetch();
-					print "1";
 					if(password_verify($_POST['currentPassword'], $user['passwort'])){
-						print "2";
 						$pwchange = false;
 						$emailchange = false;
-						
 						// Passwort ändern
 						if(isset($_POST['newPassword']) && isset($_POST['confirmPassword'])){
 							try {
-								
-								print "in pw change";
+								$passworthash = password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
 								if(!empty($_POST['newPassword']) && $_POST['newPassword'] == $_POST['confirmPassword']){
-									$statement = $pdo->prepare("UPDATE users set password=':newpassword' WHERE ID =':userid'");
-									$statement->execute(array('newpassword' => $_POST['newPassword'], 'userid' => $_SESSION['userid']));
-									$pwchange = true;
-									print "pwchange auf true";
+									$statement = $pdo->prepare("UPDATE users set passwort= :newpassword, changed_at = NOW() WHERE ID = :userid");
+									$statement->bindParam(':newpassword', $passworthash);
+									$statement->bindParam(':userid', $_SESSION['userid']);
+								  $result = $statement->execute();
+									if($result) $pwchange = true;
+									else return "Das Passwort konnte nicht in die Datenbank geschrieben werden.";
 								}
 							} catch (Exception $e) {
-								print "error in pwchange";
 								return "Ein Fehler ist aufgetreten.";
 							}
 						}
-						
-						print "3";
 						//E-Mail ändern
-						if(isset($_POST['newemail']) && isset($_POST['confirmemail'])){
+						if(isset($_POST['newEmail']) && isset($_POST['confirmEmail'])){
 							try {
-								if(!empty($_POST['newemail']) && $_POST['newemail'] == $_POST['confirmemail']){
-									$statement = $pdo->prepare("UPDATE users set email=':newemail' WHERE userId='" . $_SESSION['userid'] . "'");
-									$statement->execute(array('newemail' => $_POST['newemail'], 'userid' => $_SESSION['userid']));
-									$emailchange = true;
+								if(!empty($_POST['newEmail']) && $_POST['newEmail'] == $_POST['confirmEmail']){
+									$statement = $pdo->prepare("UPDATE users SET email = :newemail WHERE ID = :userid");
+									$statement->bindParam(':newemail',$_POST['newEmail']);
+									$statement->bindParam(':userid', $_SESSION['userid']);
+									$result = $statement->execute();
+									if($result) $emailchange = true;
+									else return "Diese E-Mail-Adresse wurde schon benutzt.";
 								}
-							} catch (Exception $e) {
+							} catch (PDOException  $e) {
 								return "Ein Fehler ist aufgetreten.";
-							}	
+							}
 						}
-						print "4";
 						session_regenerate_id();
-						print "5";
 						if (!$pwchange && !$emailchange) return "Bitte versuchen Sie es erneut.";
 						else return "Die Benutzerdaten wurden aktualisiert.";
 					}
@@ -233,7 +228,7 @@ class Passwort_Handler
 				}
 			} catch (Exception $e) {
 			}
-		}	
+		}
 	}
 }
 ?>

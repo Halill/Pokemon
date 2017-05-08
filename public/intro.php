@@ -6,18 +6,19 @@ if(!isset($_SESSION['userid'])){
 }
 include '../spielstand_Handler.php';
 $handler = NEW Spielstand_Handler();
-if(isset($_GET['Bisasam'])){
-  echo $handler->spielstand_anlegen(key($_GET));
+
+if((isset($_GET['Bisasam']) || isset($_GET['Glumanda']) || isset($_GET['Schiggy'])) && $handler->check_spielstand()==true){
+  echo $handler->spielstand_ueberschreiben(key($_GET));
   header("Location: PlayerMovement.html");
 }
-if(isset($_GET['Schiggy'])){
-  echo $handler->spielstand_anlegen(key($_GET));
+if((isset($_GET['Bisasam']) || isset($_GET['Glumanda']) || isset($_GET['Schiggy'])) && $handler->check_spielstand()==false){
+	echo $handler->spielstand_anlegen(key($_GET));
   header("Location: PlayerMovement.html");
 }
-if(isset($_GET['Glumanda'])){
-  echo $handler->spielstand_anlegen(key($_GET));
-  header("Location: PlayerMovement.html");
-}
+
+
+
+
 ?>
 
 <!DOCTYPE html>
