@@ -12,6 +12,8 @@ var SimpleGame = (function () {
         this.game.load.spritesheet('player', 'assets/misc/Player/Player_Sprite.png', 19, 27);
 		this.game.load.spritesheet('prof', 'assets/misc/NPC/Prof Halil.png', 389, 377);
 		this.game.load.spritesheet('nextDialog', 'assets/buttons/nextDialog.png', 75, 74);
+		this.game.load.image('myPokemon', 'assets/misc/Pokemon/Bisasam_Back.png');
+		this.game.load.spritesheet('aiPokemon', 'assets/misc/Pokemon/pokemon_sprite.png',35,43);
 		
     };
     SimpleGame.prototype.create = function () {
@@ -53,12 +55,22 @@ var SimpleGame = (function () {
 		this.texBox = this.game.add.sprite(Math.round(offset),this.game.height - 98, 'texBox');
 
         this.texBox.name = "chat";
-        this.texBox.visible = true;
+        this.visible = true;
 		
 		this.nextDialog = this.game.add.button(this.texBox.x + this.texBox.width - 50,this.game.height - 45, 'nextDialog', nextDialogEvent, this, 0,1,2);
 		this.nextDialog.width /= 2;
 		this.nextDialog.height /= 2;
 		this.nextDialog.visible = false;
+		
+		this.aiPokemon = this.game.add.sprite(this.game.width / 2 + 120,this.game.height / 7 + 20, 'aiPokemon');
+		this.aiPokemon.width *= 3;
+		this.aiPokemon.height*= 3;
+		this.aiPokemon.visible = false;
+		
+		this.myPokemon = this.game.add.sprite(this.game.width / 7 - 35,this.game.height / 3 + 25, 'myPokemon');
+		this.myPokemon.width *= 3;
+		this.myPokemon.height*= 3;
+		this.myPokemon.visible = false;
 		
         //Reservieren der Pfeiltasten für das Spiel. Dadurch wird verhindert, dass die Scrollbars der Website nicht darauf reagieren.
         var upKey;
@@ -96,7 +108,7 @@ var SimpleGame = (function () {
 	this.myText.visible = false;
 	this.texBox.visible = false;
 	
-			setUp(this.myText,this.enemyText);
+	setUp(this.myText,this.enemyText,this.myPokemon,this.aiPokemon);
 	//newPlayer(this.labor,this.map1,this.player,this.prof,this.texBox,this.text,this.nextDialog);
 	
 	//writeBattleInfo(this.enemyText,this.myText,randomPokemon(), loadMyPokemon());
@@ -202,18 +214,23 @@ var SimpleGame = (function () {
 })();
 
 
-var myPokemon;
 var myText;
+var pokemonSprite;
+var ai_Sprite;
+var my_Pokemon
+
 var enemyText;
 var dialog0 = "Pokemon erscheint,openBattle";
 var dialog1 = "Oh wie ich sehe haben wir einen\rneues Gesicht in der Stadt,Möchtest du dir ein Pokemon aussuchen?,Wir haben 3 zur Auswahl";
 var currentText;
 var dialogIndex;
 
-function setUp(myT,enemyT)
+function setUp(myT,enemyT,mySprite,aiSprite)
 {
 	myText = myT;
 	enemyText = enemyT;
+	pokemonSprite = mySprite;
+	ai_Sprite = aiSprite;
 	loadMyPokemon();
 }
 
@@ -253,9 +270,12 @@ function openDialog(dialogBox, dialogNum,line, nextButton)
 	{	
 		enemyText.visible = true;
 		myText.visible = true;
-
+		pokemonSprite.visible = true;
+		ai_Sprite.visible = true;
+		
 		enemyText.setText(ai_Pokemon.pokename + "\nKP:" + ai_Pokemon.kp);
-		myText.setText(myPokemon.pokename + "\nKP:" + myPokemon.kp);
+		myText.setText(my_Pokemon.pokename + "\nKP:" + my_Pokemon.kp);
+		
 		
 	/*	attk1.visible = true;
 		attk2.visible = true;
@@ -276,7 +296,7 @@ function openDialog(dialogBox, dialogNum,line, nextButton)
             if (this.readyState == 4 && this.status == 200) {
             	var json = JSON.parse(this.responseText);
             	var objJSON = eval("(function(){return " + json + ";})()");
-            	myPokemon = objJSON;
+            	my_Pokemon = objJSON;
             }
         };
         xmlhttp.open("GET","get_Pokemon.php",true);
@@ -284,7 +304,7 @@ function openDialog(dialogBox, dialogNum,line, nextButton)
 		
 		}
 		
-		function randomPokemon() {
+	function randomPokemon() {
 			
        if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -297,6 +317,8 @@ function openDialog(dialogBox, dialogNum,line, nextButton)
             if (this.readyState == 4 && this.status == 200) {
             	var json = JSON.parse(this.responseText);
             	var objJSON = eval("(function(){return " + json + ";})()");
+
+            	ai_Sprite.frame = objJSON.id - 1;
             	writeBattleInfo(objJSON);
             }
         };

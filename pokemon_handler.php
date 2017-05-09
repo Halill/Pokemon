@@ -70,7 +70,7 @@ class Pokemon{
   function get_random_pokemon(){
     include 'config.php';
     $random = rand(1,3);
-    $stmt = $pdo->prepare("SELECT pokename, kp, staerke, att1, att2, att3,att4, pfad FROM pokemon WHERE id = :pokemonid");
+    $stmt = $pdo->prepare("SELECT pokename, kp, staerke, att1, att2, att3,att4, id FROM pokemon WHERE id = :pokemonid");
     $stmt->bindParam(':pokemonid', $random);
     $result = $stmt->execute();
     $pokemon = $stmt->fetch();
@@ -107,21 +107,21 @@ class Pokemon{
     $attschaden3 = $att3[1];
     $attname4 = $att4[0];
     $attschaden4 = $att4[1];
-    $pfad = $pokemon[7];
+    $id = $pokemon[7];
 
     $json = '{
       "pokename": "'.$pokename.'",
-      "kp": '.$kp.',
-      "staerke": '.$staerke.',
-      "attname1": "'.$attname1.'",
-      "attschaden1": '.$attschaden1.',
-      "attname2": "'.$attname2.'",
-      "attschaden2": '.$attschaden2.',
-      "attname3": "'.$attname3.'",
-      "attschaden3": '.$attschaden3.',
-      "attname4": "'.$attname4.'",
-      "attschaden4": '.$attschaden4.',
-      "pfad": "'.$pfad.'"
+    	"kp": '.$kp.',
+    	"staerke": '.$staerke.',
+    	"attname1": "'.$attname1.'",
+    	"attschaden1": '.$attschaden1.',
+    	"attname2": "'.$attname2.'",
+    	"attschaden2": '.$attschaden2.',
+    	"attname3": "'.$attname3.'",
+    	"attschaden3": '.$attschaden3.',
+    	"attname4": "'.$attname4.'",
+    	"attschaden4": '.$attschaden4.',
+    	"id": '.$id.'
     }';
     return $json;
   }
