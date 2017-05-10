@@ -134,7 +134,7 @@ class Pokemon{
   }
   function setScore(){
       $_SESSION['score'] = $_SESSION['score']+1;
-    }
+    
   }
 }
 ?>
