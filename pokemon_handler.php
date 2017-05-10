@@ -44,8 +44,7 @@ class Pokemon{
       $kp = $pokemon[1];
       $staerke = $pokemon[2];
     }
-    $pokename = $pokemon[0];
-    $kp = $pokemon[1];
+	  $pokename = $pokemon[0];
 
     $attname1 = $att1[0];
     $attschaden1 = $att1[1];

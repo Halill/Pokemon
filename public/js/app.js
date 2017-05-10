@@ -385,7 +385,7 @@ function openDialog(dialogBox, dialogNum,line, nextButton)
         }
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-            	alert(this.responseText);
+            	//this.responseText
             }
         };
         xmlhttp.open("GET","wonFight.php",true);
