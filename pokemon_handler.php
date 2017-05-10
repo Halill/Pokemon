@@ -10,7 +10,7 @@ class Pokemon{
     $result = $stmt->execute();
     $pokemonid = $stmt->fetch();
     $score = $pokemonid[1];
-    $stmt = $pdo->prepare("SELECT pokename, kp, staerke, att1, att2, att3,att4 FROM pokemon WHERE id = :pokemonid");
+    $stmt = $pdo->prepare("SELECT pokename, kp, staerke, att1, att2, att3,att4,id FROM pokemon WHERE id = :pokemonid");
     $stmt->bindParam(':pokemonid', $pokemonid[0]);
     $result = $stmt->execute();
     $pokemon = $stmt->fetch();
@@ -69,7 +69,7 @@ class Pokemon{
     	"attschaden3": '.$attschaden3.',
     	"attname4": "'.$attname4.'",
     	"attschaden4": '.$attschaden4.',
-    	"id": "'.$pokemonid.'"
+    	"id": '.$pokemon[7].'
     }';
     return $json;
   }

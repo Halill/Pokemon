@@ -341,6 +341,7 @@ function openDialog(dialogBox, dialogNum,line, nextButton)
         }
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
+            	alert(this.responseText);
             	var json = JSON.parse(this.responseText);
             	var objJSON = eval("(function(){return " + json + ";})()");
             	my_Pokemon = objJSON;
