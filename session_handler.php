@@ -19,6 +19,11 @@ class Session
     	//Ueberpruefung des Passworts
     	if ($user !== false && password_verify($passwort, $user['passwort'])) {
     		$_SESSION['userid'] = $user['ID'];
+        $stmt = $pdo->prepare("SELECT score FROM spielstand WHERE spielerid = :userid");
+        $stmt->bindParam(':userid', $_SESSION['userid']);
+        $result = $stmt->execute();
+        $score = $stmt->fetch();
+        $_SESSION['score'] = $score[0];
     		if(session_regenerate_id()) header("Location: game.php");
     		exit;
     	} else {

@@ -11,8 +11,9 @@ class Spielstand_Handler
     $uhrzeit = date("H:i",$timestamp);
     $saved_at = $datum.' - '.$uhrzeit." Uhr";
 
-    $stmt = $pdo->prepare("UPDATE spielstand SET saved_at = :saved_at WHERE spielerid = :userid");
+    $stmt = $pdo->prepare("UPDATE spielstand SET saved_at = :saved_at, score = :score WHERE spielerid = :userid");
     $stmt->bindParam(':saved_at', $saved_at);
+    $stmt->bindParam(':score', $_SESSION['score']);
     $stmt->bindParam(':userid', $_SESSION['userid']);
     $result = $stmt->execute();
     //cstmt=check statement, Variablen mit c -> check Variablen, also um zu prüfen, ob der Datenbankeintrag funktioniert hat

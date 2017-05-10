@@ -5,12 +5,12 @@ class Pokemon{
     include 'spielstand_Handler.php';
     $spielstand_check = Spielstand_Handler::check_spielstand();
 
-    $stmt = $pdo->prepare("SELECT pokemon FROM spielstand WHERE spielerid = :userid");
+    $stmt = $pdo->prepare("SELECT pokemon, score FROM spielstand WHERE spielerid = :userid");
     $stmt->bindParam(':userid', $_SESSION['userid']);
     $result = $stmt->execute();
     $pokemonid = $stmt->fetch();
-
-    $stmt = $pdo->prepare("SELECT pokename, kp, staerke, att1, att2, att3,att4, pfad FROM pokemon WHERE id = :pokemonid");
+    $score = $pokemonid[1];
+    $stmt = $pdo->prepare("SELECT pokename, kp, staerke, att1, att2, att3,att4 FROM pokemon WHERE id = :pokemonid");
     $stmt->bindParam(':pokemonid', $pokemonid[0]);
     $result = $stmt->execute();
     $pokemon = $stmt->fetch();
@@ -36,9 +36,17 @@ class Pokemon{
     $result = $stmt->execute();
     $att4 = $stmt->fetch();
 
+    if($score>0){
+        $kp = $pokemon[1]+$score;
+        $staerke = $pokemon[2]+($score/10);
+    }
+    else {
+      $kp = $pokemon[1];
+      $staerke = $pokemon[2];
+    }
     $pokename = $pokemon[0];
     $kp = $pokemon[1];
-    $staerke = $pokemon[2];
+
     $attname1 = $att1[0];
     $attschaden1 = $att1[1];
     $attname2 = $att2[0];
@@ -47,7 +55,6 @@ class Pokemon{
     $attschaden3 = $att3[1];
     $attname4 = $att4[0];
     $attschaden4 = $att4[1];
-    $pfad = $pokemon[7];
 
     $json = '{
     	"spielstand_check": '.$spielstand_check.',
@@ -62,7 +69,7 @@ class Pokemon{
     	"attschaden3": '.$attschaden3.',
     	"attname4": "'.$attname4.'",
     	"attschaden4": '.$attschaden4.',
-    	"pfad": "'.$pfad.'"
+    	"id": "'.$pokemonid.'"
     }';
     return $json;
   }
@@ -124,6 +131,11 @@ class Pokemon{
     	"id": '.$id.'
     }';
     return $json;
+  }
+  function setScore($gewonnen){
+    if($gewonnen){
+      $_SESSION['score'] = $_SESSION['score']+1;
+    }
   }
 }
 ?>
