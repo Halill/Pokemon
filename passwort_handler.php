@@ -64,10 +64,10 @@ class Passwort_Handler
 							// per sha1 verschlüsselt.
 							$passwortcode = $this->random_string();
 							$_GET['code'] = $passwortcode;
-							$_GET['userid'] = $user['ID'];
+							$_GET['userid'] = $user['id'];
 							$statement = $pdo->prepare("UPDATE users SET passwortcode = :passwortcode, passwortcode_time = NOW() WHERE id = :userid");
-							$result = $statement->execute(array('passwortcode' => sha1($passwortcode), 'userid' => $user['ID']));
-							$url_passwortcode = 'http://localhost/pwreset.php?userid='.$user['ID'].'&code='.$passwortcode;
+							$result = $statement->execute(array('passwortcode' => sha1($passwortcode), 'userid' => $user['id']));
+							$url_passwortcode = 'http://localhost/pwreset.php?userid='.$user['id'].'&code='.$passwortcode;
 
 							// Hier wird der Mailtext erstellt
 							define('BODY','Hallo '.$user['username'].',
@@ -183,7 +183,7 @@ class Passwort_Handler
 		if(isset($_SESSION['userid'])){
 			try {
 				if(count($_POST)>0) {
-					$statement = $pdo->prepare("SELECT * FROM users WHERE ID = :userid");
+					$statement = $pdo->prepare("SELECT * FROM users WHERE id = :userid");
 					$result = $statement->execute(array('userid' => $_SESSION['userid']));
 					$user = $statement->fetch();
 					if(password_verify($_POST['currentPassword'], $user['passwort'])){
@@ -194,7 +194,7 @@ class Passwort_Handler
 							try {
 								$passworthash = password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
 								if(!empty($_POST['newPassword']) && $_POST['newPassword'] == $_POST['confirmPassword']){
-									$statement = $pdo->prepare("UPDATE users set passwort= :newpassword, changed_at = NOW() WHERE ID = :userid");
+									$statement = $pdo->prepare("UPDATE users set passwort= :newpassword, changed_at = NOW() WHERE id = :userid");
 									$statement->bindParam(':newpassword', $passworthash);
 									$statement->bindParam(':userid', $_SESSION['userid']);
 								  $result = $statement->execute();

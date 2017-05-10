@@ -18,7 +18,7 @@ class Session
 
     	//Ueberpruefung des Passworts
     	if ($user !== false && password_verify($passwort, $user['passwort'])) {
-    		$_SESSION['userid'] = $user['ID'];
+    		$_SESSION['userid'] = $user['id'];
         $stmt = $pdo->prepare("SELECT score FROM spielstand WHERE spielerid = :userid");
         $stmt->bindParam(':userid', $_SESSION['userid']);
         $result = $stmt->execute();
