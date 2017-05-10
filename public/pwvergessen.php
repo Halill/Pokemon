@@ -5,6 +5,8 @@ if(isset($_POST['email'])){
     $h = NEW Passwort_Handler();
     $ausgabe = $h->send_pwforgotmail();
 }
+if(isset($ausgabe))
+	echo'<script type="text/javascript" language="Javascript"> alert("'.htmlentities($ausgabe).'") </script>';
 ?>
 
 <!DOCTYPE html>
@@ -31,8 +33,7 @@ if(isset($_POST['email'])){
 
 <!-- Hier beginnt die Passwort-vergessen-Seite -->
        <div id="pw">
-       <h1><?php if(isset($ausgabe)) echo htmlentities($ausgabe);
-   				 else echo htmlentities("Passwort vergessen!");?></h1>
+       <h1>Passwort vergessen!</h1>
           <br><br>
           <form action="?email=1" method="post">
 

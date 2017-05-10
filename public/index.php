@@ -1,21 +1,24 @@
 <?php
 session_start();
+//Falls die Userid durch die Funktion Session::login() gesetzt wird, wird das Spiel gestartet
 if(isset($_SESSION['userid'])){
 	header("Location: game.php");
 	die();
 }
+//Ansonsten kann sich jeder registrieren oder einloggen.
 include '../session_handler.php';
-$handler = NEW Session();
-if(isset($_GET['login'])) {
+
+//Falls der Login Button geklickt wird, wird die Funktion Session::login() aufgerufen
+if(isset($_GET['login']))
 	$error = Session::login();
-	if(isset($error)){
-		echo htmlentities($error);
-	}
-}
+	if(isset($error)) echo '<script type="text/javascript" language="Javascript"> alert("'.htmlentities($error).'") </script>';
+
+//Falls der Login Button geklickt wird, wird die Funktion Session::register() aufgerufen
 if(isset($_GET['register'])) {
 	$ausgabe = Session::register();
-	echo htmlentities($ausgabe);
+	if(isset($ausgabe)) echo '<script type="text/javascript" language="Javascript"> alert("'.htmlentities($ausgabe).'") </script>';
 }
+
 ?>
 
 
@@ -27,12 +30,12 @@ if(isset($_GET['register'])) {
   <title>Pokemon-Game</title>
   <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-
-      <link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-  <div class="form">
+
+<div class="form">
+
 <!-- Hier wird eine Gruppe gebildet. Standardmaessig ist login aktiv, sodass die login-Seite angezeigt.
 Bei Klick auf Registrieren wird ueber die index.js der signup-Tab geoeffnet und login auf hide gesetzt.
  -->
@@ -62,7 +65,7 @@ Bei Klick auf Registrieren wird ueber die index.js der signup-Tab geoeffnet und 
             </label>
             <input type="password" name="passwort"/>
           </div>
-
+ <!-- Der Button "Passwort vergessen?"" verweist auf die pwvergessen.php, damit die Oberfläche hierfür angezeigt werden kann -->
           <p class="forgot"><a href="pwvergessen.php">Passwort vergessen?</a></p>
 
        	  <input type="image" src="assets/pokeball.png" alt="Anmelden"/>
@@ -114,9 +117,7 @@ Bei Klick auf Registrieren wird ueber die index.js der signup-Tab geoeffnet und 
   </div><!-- tab-content -->
 
 </div> <!-- /form -->
-  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-
-    <script src="js/index.js"></script>
-
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="js/index.js"></script>
 </body>
 </html>

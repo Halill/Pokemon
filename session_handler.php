@@ -26,9 +26,14 @@ class Session
         $_SESSION['score'] = $score[0];
     		if(session_regenerate_id()) header("Location: game.php");
     		exit;
-    	} else {
-    		return "Benutzername oder Passwort war ungültig";
     	}
+      if(!$user) {
+        return "Dieser Benutzername wurde nicht gefunden.";
+      }
+      if(password_verify($passwort, $user['passwort'])==false) {
+    		return "Bitte geben Sie das richtige Passwort ein.";
+    	}
+
 
     }
 
@@ -43,19 +48,19 @@ class Session
     	$passwort2 = $_POST['passwort2'];
 
     	if(strlen($username) == 0) {
-    		echo 'Bitte einen Username eingeben<br>';
+    		return 'Bitte einen Username eingeben';
     		$error = true;
     	}
     	if(strlen($email) == 0) {
-    		echo 'Bitte eine E-Mailadresse eingeben<br>';
+    		return 'Bitte eine E-Mailadresse eingeben';
     		$error = true;
     	}
     	if(strlen($passwort) == 0) {
-    		echo 'Bitte ein Passwort angeben<br>';
+    		return 'Bitte ein Passwort angeben';
     		$error = true;
     	}
     	if($passwort != $passwort2) {
-    		echo 'Die Passwoerter muessen uebereinstimmen<br>';
+    		return 'Die Passwoerter muessen übereinstimmen';
     		$error = true;
     	}
 
@@ -68,7 +73,7 @@ class Session
     		$user = $statement->fetch();
 
     		if($user !== false) {
-    			return 'Diese E-Mailadresse ist bereits vergeben<br>';
+    			return 'Diese E-Mailadresse ist bereits vergeben';
     			$error = true;
     		}
     	}
