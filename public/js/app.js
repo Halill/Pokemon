@@ -341,7 +341,6 @@ function openDialog(dialogBox, dialogNum,line, nextButton)
         }
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-            	alert(this.responseText);
             	var json = JSON.parse(this.responseText);
             	var objJSON = eval("(function(){return " + json + ";})()");
             	my_Pokemon = objJSON;
@@ -371,8 +370,26 @@ function openDialog(dialogBox, dialogNum,line, nextButton)
             }
         };
         xmlhttp.open("GET","get_Pokemon_AI.php",true);
-        xmlhttp.send();
-   
+        xmlhttp.send();  
+
+		}
+		
+		function wonFight() {
+			
+       if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            	alert(this.responseText);
+            }
+        };
+        xmlhttp.open("GET","wonFight.php",true);
+        xmlhttp.send();  
 
 		}
 	
@@ -438,6 +455,7 @@ function down(item,parm,atkID,mapPic,battlePic,player) {
   	{
   		ai_Pokemon.kp = 0;
   		infoBattle.setText("Du hast gewonnen");
+  		wonFight();
   		//closeFightWindow(mapPic,battlePic,player)
   	}
   	else 

@@ -132,8 +132,7 @@ class Pokemon{
     }';
     return $json;
   }
-  function setScore($gewonnen){
-    if($gewonnen){
+  function setScore(){
       $_SESSION['score'] = $_SESSION['score']+1;
     }
   }
