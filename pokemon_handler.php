@@ -22,6 +22,7 @@ class Pokemon{
     $result = $stmt->execute();
     $pokemonid = $stmt->fetch();
     $score = $pokemonid[1];
+
     $stmt = $pdo->prepare("SELECT pokename, kp, staerke, att1, att2, att3,att4,id FROM pokemon WHERE id = :pokemonid");
     $stmt->bindParam(':pokemonid', $pokemonid[0]);
     $result = $stmt->execute();
@@ -50,10 +51,15 @@ class Pokemon{
 
     // Der Score hat Einfluss auf das Pokemon:
     // Je öfters gewonnen wird (siehe @method setScore()), desto stärker wird das Pokemon.
-    if($score>0){
-        $kp = $pokemon[1]+$score;
-        $staerke = $pokemon[2]+($score/10);
+    if($_SESSION['score']>$score){
+        $kp = $pokemon[1]+$_SESSION['score'];
+        $staerke = $pokemon[2]+($_SESSION['score']/10);
     }
+    elseif($score>0){
+      $kp = $pokemon[1]+$score;
+      $staerke = $pokemon[2]+($score/10);
+    }
+
     // Die Basiskampfwerte stehen in der Datenbank
     else {
       $kp = $pokemon[1];
