@@ -1,10 +1,10 @@
-#button{
+#button {
   font-family: 'Titillium Web', sans-serif;
   font-size: 48px;
   text-align: center;
-    background-color: white;
-
+  background-color: white;
 }
+
 #ranking {
     font-family: 'Titillium Web', sans-serif;
     border-collapse: collapse;
@@ -28,17 +28,18 @@
     background-color: #4CAF50;
     color: white;
 }
-#button table{
+
+#button table {
     font-family: 'Titillium Web', sans-serif;
     text-align: center;
     width: 100%;
 }
-input[type=image]{
-	width: 200px;
 
+input[type=image] {
+  width: 200px;
 	display: block;
-    margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

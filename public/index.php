@@ -1,4 +1,12 @@
 <?php
+/**
+* Die index.php ist die Einstiegsseite unserer Website. Hier können sich bereit registrierte User einloggen.
+* Ansonsten kann sich über den Reiter Registrieren jeder registrieren.
+* Hat ein User sein Passwort vergessen, kann er auf den Button "Passwort vergessen?" klicken.
+*
+*
+*
+*/
 session_start();
 //Falls die Userid durch die Funktion Session::login() gesetzt wird, wird das Spiel gestartet
 if(isset($_SESSION['userid'])){
@@ -9,16 +17,17 @@ if(isset($_SESSION['userid'])){
 include '../session_handler.php';
 
 //Falls der Login Button geklickt wird, wird die Funktion Session::login() aufgerufen
+//Gibt es Fehlermeldungen werden diese über ein Popup angezeigt.
 if(isset($_GET['login']))
 	$error = Session::login();
 	if(isset($error)) echo '<script type="text/javascript" language="Javascript"> alert("'.htmlentities($error).'") </script>';
 
-//Falls der Login Button geklickt wird, wird die Funktion Session::register() aufgerufen
+//Falls der Login Button geklickt wird, wird die Funktion Session::register() aufgerufen.
+//Gibt es Fehlermeldungen werden diese über ein Popup angezeigt.
 if(isset($_GET['register'])) {
 	$ausgabe = Session::register();
 	if(isset($ausgabe)) echo '<script type="text/javascript" language="Javascript"> alert("'.htmlentities($ausgabe).'") </script>';
 }
-
 ?>
 
 
@@ -33,91 +42,68 @@ if(isset($_GET['register'])) {
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+	<div class="form">
+		<!-- Hier wird eine Gruppe gebildet. Standardmaessig ist login aktiv, sodass die login-Seite angezeigt.
+    Bei Klick auf Registrieren wird ueber die index.js der signup-Tab geoeffnet und login auf hide gesetzt.
+     -->
+		 <ul class="tab-group">
+			 <li class="tab active"><a href="#login">Login</a></li>
+			 <li class="tab"><a href="#signup">Registrieren</a></li>
+		 </ul>
+		 <div class="tab-content">
+			 <!-- Hier beginnt die Login-Seite -->
+			 <div id="login">
 
-<div class="form">
+				 <h1>Willkommen!</h1>
 
-<!-- Hier wird eine Gruppe gebildet. Standardmaessig ist login aktiv, sodass die login-Seite angezeigt.
-Bei Klick auf Registrieren wird ueber die index.js der signup-Tab geoeffnet und login auf hide gesetzt.
- -->
-      <ul class="tab-group">
-        <li class="tab active"><a href="#login">Login</a></li>
-        <li class="tab"><a href="#signup">Registrieren</a></li>
-      </ul>
+				 <form action="?login=1" method="post">
+					 <div class="field-wrap">
+						 <label>Benutzername<span class="req">*</span></label>
+						 <input type="text" name="username"/>
+					 </div>
 
-      <div class="tab-content">
+					 <div class="field-wrap">
+						 <label>Passwort<span class="req">*</span></label>
+						 <input type="password" name="passwort"/>
+					 </div>
+					 <!-- Der Button "Passwort vergessen?"" verweist auf die pwvergessen.php, damit die Oberfläche hierfür angezeigt werden kann -->
+					 <p class="forgot"><a href="pwvergessen.php">Passwort vergessen?</a></p>
 
-<!-- Hier beginnt die Login-Seite -->
-       <div id="login">
-          <h1>Willkommen!</h1>
+					 <input type="image" src="assets/pokeball.png" alt="Anmelden"/>
+				 </form>
+			 </div>
+			 <!-- Hier beginnt die Registrieren-Seite -->
+			 <div id="signup">
 
-          <form action="?login=1" method="post">
+				 <h1>Registrieren</h1>
 
-            <div class="field-wrap">
-            <label>
-              Benutzername<span class="req">*</span>
-            </label>
-            <input type="text" name="username"/>
-          </div>
+				 <form action="/?register=1" method="post">
+					 <div class="field-wrap">
+						 <label>Benutzername<span class="req">*</span></label>
+						 <input type="text" required autocomplete="off" name="username"/>
+					 </div>
 
-          <div class="field-wrap">
-            <label>
-              Passwort<span class="req">*</span>
-            </label>
-            <input type="password" name="passwort"/>
-          </div>
- <!-- Der Button "Passwort vergessen?"" verweist auf die pwvergessen.php, damit die Oberfläche hierfür angezeigt werden kann -->
-          <p class="forgot"><a href="pwvergessen.php">Passwort vergessen?</a></p>
+					 <div class="field-wrap">
+						 <label>E-Mail<span class="req">*</span></label>
+						 <input type="email"required autocomplete="off" name="email"/>
+					 </div>
 
-       	  <input type="image" src="assets/pokeball.png" alt="Anmelden"/>
+					 <div class="field-wrap">
+						 <label>Passwort<span class="req">*</span></label>
+						 <input type="password"required autocomplete="off" name="passwort"/>
+					 </div>
 
-          </form>
+					 <div class="field-wrap">
+						 <label>Passwort erneut eingeben<span class="req">*</span></label>
+             <input type="password" required autocomplete="off" name="passwort2"/>
+           </div>
 
-        </div>
-
- <!-- Hier beginnt die Registrieren-Seite -->
-        <div id="signup">
-          <h1>Registrieren</h1>
-
-          <form action="/?register=1" method="post">
-
-            <div class="field-wrap">
-              <label>
-                Benutzername<span class="req">*</span>
-              </label>
-              <input type="text" required autocomplete="off" name="username"/>
-            </div>
-
-          <div class="field-wrap">
-            <label>
-              E-Mail<span class="req">*</span>
-            </label>
-            <input type="email"required autocomplete="off" name="email"/>
-          </div>
-
-          <div class="field-wrap">
-            <label>
-              Passwort<span class="req">*</span>
-            </label>
-            <input type="password"required autocomplete="off" name="passwort"/>
-          </div>
-
-          <div class="field-wrap">
-            <label>
-              Passwort erneut eingeben<span class="req">*</span>
-            </label>
-            <input type="password" required autocomplete="off" name="passwort2"/>
-          </div>
-
-          <input type="image" src="assets/pokeball.png" style="width:150px" alt="Registrieren" />
-
-          </form>
-
-        </div>
-
-  </div><!-- tab-content -->
-
-</div> <!-- /form -->
-<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src="js/index.js"></script>
+					 <input type="image" src="assets/pokeball.png" style="width:150px" alt="Registrieren" />
+				 </form>
+			 </div>
+		 </div>
+	 </div>
+	 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	 <script src="js/index.js"></script>
 </body>
 </html>

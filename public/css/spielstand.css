@@ -1,53 +1,57 @@
-#spielstand{
+#spielstand {
   font-family: 'Titillium Web', sans-serif;
   background-color: white;
   text-align: left;
   font-size: 48px;
 
 }
-#button{
+
+#button {
   font-family: 'Titillium Web', sans-serif;
   font-size: 48px;
   text-align: center;
-    background-color: white;
-
+  background-color: white;
 }
+
 #ranking {
-    font-family: 'Titillium Web', sans-serif;
-    border-collapse: collapse;
-    width: 100%;
+  font-family: 'Titillium Web', sans-serif;
+  border-collapse: collapse;
+  width: 100%;
 }
 
 #ranking  td, #ranking  th {
-    border: 1px solid #ddd;
-    padding: 8px;
+  border: 1px solid #ddd;
+  padding: 8px;
 }
 
 #ranking tr {
-    background-color: white;
-    color: black;
+  background-color: white;
+  color: black;
 }
 
-#ranking  tr:hover {background-color: #ddd;}
+#ranking  tr:hover {
+  background-color: #ddd;
+}
 
 #ranking  th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: white;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
 }
-#button {
-    font-family: 'Titillium Web', sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-input[type=image]{
-	width: 200px;
 
+#button {
+  font-family: 'Titillium Web', sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+input[type=image]{
+  width: 200px;
 	display: block;
-    margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

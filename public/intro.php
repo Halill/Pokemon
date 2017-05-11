@@ -1,4 +1,14 @@
 <?php
+/**
+* Die intro.php wird angezeigt, wenn der User noch keinen Spielstand hat oder
+* seinen aktuellen überschreiben möchte.
+* Hier kann sich der User sein Pokemon aussuchen.
+* Bei Klick auf ein Pokemon wird über ein POST der Funktion spielstand_ueberschreiben()
+* oder spielstand_anlegen() das Pokemon übergeben.
+*
+*
+*/
+
 session_start();
 //Falls in der Session die userid nicht gesetzt ist, wird derjenige auf die index.php umgeleitet.
 if(!isset($_SESSION['userid'])){
@@ -7,44 +17,46 @@ if(!isset($_SESSION['userid'])){
 }
 include '../spielstand_Handler.php';
 $handler = NEW Spielstand_Handler();
-
+//Der Funktion spielstand_ueberschreiben() erhält per GET den Pokemonnamen, damit die Funktion
+//dem User den Spielstand überschreiben kann.
+//Wird nur ausgeführt, wenn der Spieler schon einen Spielstand hat.
 if((isset($_GET['Bisasam']) || isset($_GET['Glumanda']) || isset($_GET['Schiggy'])) && $handler->check_spielstand()==true){
   echo $handler->spielstand_ueberschreiben(key($_GET));
   header("Location: PlayerMovement.html");
 }
+//Der Funktion spielstand_anlegen() erhält per GET den Pokemonnamen, damit die Funktion
+//dem User den Spielstand überschreiben kann.
+//Wird nur ausgeführt, wenn der Spieler keinen Spielstand hat.
 if((isset($_GET['Bisasam']) || isset($_GET['Glumanda']) || isset($_GET['Schiggy'])) && $handler->check_spielstand()==false){
 	echo $handler->spielstand_anlegen(key($_GET));
   header("Location: PlayerMovement.html");
 }
-
-
-
-
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<link href="/css/intro.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<link href="/css/intro.css" rel="stylesheet">
 </head>
 <body>
+	<div id="oben">
+    <!-- Bisasam wird ausgewählt-->
+		<form action="?Bisasam=1" method="post">
+			<input type="image" src="/assets/misc/Pokemon/Bisasam_Front.png" alt="bisasam" width="100" height="100"/>
+		</form>
+    <!-- Schiggy wird ausgewählt-->
+		<form action="?Schiggy=1" method="post">
+			<input type="image" src="/assets/misc/Pokemon/Schiggy_Front.gif" alt="bisasam" width="100" height="100"/>
+		</form>
+    <!-- Glumanda wird ausgewählt-->
+		<form action="?Glumanda=1" method="post">
+			<input type="image" src="/assets/misc/Pokemon/Glumanda_Front.gif" alt="bisasam" width="100" height="100"/>
+		</form>
 
-
-<div id="oben">
-<form action="?Bisasam=1" method="post">
-<input type="image" src="/assets/misc/Pokemon/Bisasam_Front.png" alt="bisasam" width="100" height="100"/>
-</form>
-<form action="?Schiggy=1" method="post">
-<input type="image" src="/assets/misc/Pokemon/Schiggy_Front.gif" alt="bisasam" width="100" height="100"/>
-</form>
-<form action="?Glumanda=1" method="post">
-<input type="image" src="/assets/misc/Pokemon/Glumanda_Front.gif" alt="bisasam" width="100" height="100"/>
-</form>
-</div>
-
-<div id="unten"><img src="/assets/intro.png" alt="intro" width="760" height="628"></div>
-
-
+	</div>
+	<div id="unten">
+		<img src="/assets/intro.png" alt="intro" width="760" height="628">
+	</div>
 </body>
 </html>

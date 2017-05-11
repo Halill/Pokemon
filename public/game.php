@@ -1,24 +1,47 @@
 <?php
+/**
+* Die game.php ist nur für eingeloggte User sichtbar.
+* Am Anfang wird zunächst geprüft, ob der User einen Spielstand hat.
+* Hat er keinen, wird er auf die intro.php umgeleitet.
+* Ansonsten wird er auf die Spielstandübersicht geleitet. Dort sieht er sein letzten Speicherpunkt,
+* inklusive Score, Pokemon und Usernamen.
+* Wird der Button "Fortsetzen" geklickt wird das Spiel über die PlayerMovement.html gestartet.
+*
+* Des Weiteren wird auf der game.php auf der rechten Seite mehrere Buttons angeboten:
+* - Speichern -> speichern.php
+* - Spielstandübersicht -> spielstand.php
+* - Benutzerverwaltung -> Benutzerverwaltung.php
+* - Ranking -> ranking.php
+* - Logout -> logout.php
+*/
 session_start();
 //Falls in der Session die userid nicht gesetzt ist, wird derjenige auf die index.php umgeleitet.
 if(!isset($_SESSION['userid'])){
 	header("Location: index.php");
 	die();
 }
+
 include '../Spielstand_Handler.php';
+// checkt, ob der User einen Spielstand hat
 if(Spielstand_Handler::check_spielstand() && !isset($_GET['Fortsetzen'])){
 	 $link = "spielstand.php";
 }
-elseif (!$h->check_spielstand()) {
+// Wenn der User keinen Spielstand hat, wird er auf die intro.php geleitet.
+elseif (!Spielstand_Handler::check_spielstand()) {
 	 $link = "intro.php";
 }
+// wird der Button "Fortsetzen" geklickt, startet das Spiel
 else {
 	$link = "PlayerMovement.html";
 }
+// Bereich, für die Buttons rechts an der Seite:
+// wird jeweils bei Button Klick ausgeführt
 if(isset($_POST["change"])) $link = "benutzerverwaltung.php";
 if(isset($_POST["spielstand"])) $link = "spielstand.php";
 if(isset($_POST["ranking"])) $link = "ranking.php";
 
+// Falls ein Spielstand gespeichert wurde, wird ein Popup angezeigt.
+// Die Session-Variable 'counter' sorgt dafür, dass das Popup nur einmal angezeigt wird, nachdem auf speichern geklickt wurde.
 if(isset($_SESSION["message"]) && $_SESSION['counter']<1){
 	echo '<script type="text/javascript" language="Javascript"> alert("'.htmlentities($_SESSION["message"]).'") </script>';
 	$_SESSION['counter'] = 1;
@@ -28,36 +51,45 @@ if(isset($_SESSION["message"]) && $_SESSION['counter']<1){
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <link href="/css/style.css" rel="stylesheet">
-  	<link rel="shortcut icon" type="image/x-icon" href="assets/pokeball.ico" />
-    <title>Poke-Game</title>
+	<meta charset="UTF-8">
+  <link href="/css/style.css" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon" href="assets/pokeball.ico" />
+  <title>Poke-Game</title>
 </head>
 <body>
-<div id="wrapper">
-<div id="game">
-<iframe style="margin: 0 auto;display: block;" src=<?php echo htmlentities($link); ?>  scrolling="no" width="760" height="628" frameBorder="0"></iframe>
-</div>
-<div id="menue">
-<fieldset style="align:right">
-  <legend style="padding:20px;text-align:center">Menü</legend>
-<form method="post" action="speichern.php">
-   <input value="Speichern" type="submit" name="save">
-</form>
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-   <input value="Spielstandübersicht" type="submit" name="spielstand">
-</form>
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-  <input value="Benutzerverwaltung" type="submit" name="change">
-</form>
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-  <input value="Ranking" type="submit" name="ranking">
-</form>
-<form method="post" action="logout.php">
-  <input value="Logout" type="submit" name="logout" align="right">
-</form>
-</div>
-</div>
-</fieldset>
+	<div id="wrapper">
+		<!-- Iframe in dem die Inhalte angezeigt wurde. -->
+		<div id="game">
+			<iframe style="margin: 0 auto;display: block;" src=<?php echo htmlentities($link); ?>  scrolling="no" width="760" height="628" frameBorder="0"></iframe>
+		</div>
+		<div id="menue">
+			<!-- Menü an der rechten Seite mit den Buttons, die auf die anderen Seiten leiten.-->
+			<fieldset style="align:right">
+				<legend style="padding:20px;text-align:center">Menü</legend>
+
+			  <!-- Speichert das Spiel-->
+				<form method="post" action="speichern.php">
+					<input value="Speichern" type="submit" name="save">
+				</form>
+			  <!-- Anzeige der Spielstandübersicht -->
+				<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+					<input value="Spielstandübersicht" type="submit" name="spielstand">
+				</form>
+			  <!-- Anzeige der Benutzerverwaltung -->
+				<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+					<input value="Benutzerverwaltung" type="submit" name="change">
+				</form>
+			  <!-- Anzeige des Ranking -->
+				<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+					<input value="Ranking" type="submit" name="ranking">
+				</form>
+			  <!-- User wird ausgeloggt -->
+				<form method="post" action="logout.php">
+					<input value="Logout" type="submit" name="logout" align="right">
+				</form>
+
+			</div>
+		</fieldset>
+	</div>
 </body>
 </html>
