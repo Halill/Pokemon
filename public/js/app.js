@@ -12,7 +12,7 @@ var SimpleGame = (function () {
         this.game.load.spritesheet('player', 'assets/misc/Player/Player_Sprite.png', 19, 27);
 		this.game.load.spritesheet('prof', 'assets/misc/NPC/Prof Halil.png', 389, 377);
 		this.game.load.spritesheet('nextDialog', 'assets/buttons/nextDialog.png', 75, 74);
-		this.game.load.image('myPokemon', 'assets/misc/Pokemon/Bisasam_Back.png');
+		this.game.load.spritesheet('myPokemon', 'assets/misc/Pokemon/pokemon_sprite_back.png',40,42);
 		this.game.load.spritesheet('aiPokemon', 'assets/misc/Pokemon/pokemon_sprite.png',35,43);
 		
     };
@@ -344,6 +344,7 @@ function openDialog(dialogBox, dialogNum,line, nextButton)
             	var json = JSON.parse(this.responseText);
             	var objJSON = eval("(function(){return " + json + ";})()");
             	my_Pokemon = objJSON;
+            	pokemonSprite.frame = my_Pokemon.id - 1;
             }
         };
         xmlhttp.open("GET","get_Pokemon.php",true);
@@ -450,6 +451,7 @@ function down(item,parm,atkID,mapPic,battlePic,player) {
     	break;    	
     }
     
+    damage = Math.floor(damage * my_Pokemon.staerke);
     ai_Pokemon.kp -= damage;
   	if(ai_Pokemon.kp <= 0)
   	{
