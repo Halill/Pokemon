@@ -12,8 +12,8 @@ var SimpleGame = (function () {
         this.game.load.spritesheet('player', 'assets/misc/Player/Player_Sprite.png', 19, 27);
 		this.game.load.spritesheet('prof', 'assets/misc/NPC/Prof Halil.png', 389, 377);
 		this.game.load.spritesheet('nextDialog', 'assets/buttons/nextDialog.png', 75, 74);
-		this.game.load.spritesheet('myPokemon', 'assets/misc/Pokemon/pokemon_sprite_back.png',40,42);
-		this.game.load.spritesheet('aiPokemon', 'assets/misc/Pokemon/pokemon_sprite.png',35,43);
+		this.game.load.spritesheet('myPokemon', 'assets/misc/Pokemon/pokemon_sprite_back.png',96,96);
+		this.game.load.spritesheet('aiPokemon', 'assets/misc/Pokemon/pokemon_sprite.png',96,96);
 		
     };
     SimpleGame.prototype.create = function () {
@@ -62,12 +62,12 @@ var SimpleGame = (function () {
 		this.nextDialog.height /= 2;
 		this.nextDialog.visible = false;
 		
-		this.aiPokemon = this.game.add.sprite(this.game.width / 2 + 120,this.game.height / 7 + 20, 'aiPokemon');
+		this.aiPokemon = this.game.add.sprite(this.game.width / 2 + 30 ,this.game.height / 8 - 5, 'aiPokemon');
 		this.aiPokemon.width *= 3;
 		this.aiPokemon.height*= 3;
 		this.aiPokemon.visible = false;
 		
-		this.myPokemon = this.game.add.sprite(this.game.width / 7 - 35,this.game.height / 3 + 25, 'myPokemon');
+		this.myPokemon = this.game.add.sprite(this.game.width / 7 - 35,this.game.height / 3 + 20, 'myPokemon');
 		this.myPokemon.width *= 3;
 		this.myPokemon.height*= 3;
 		this.myPokemon.visible = false;
