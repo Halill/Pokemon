@@ -1,5 +1,6 @@
 <?php
 session_start();
+//Falls in der Session die userid nicht gesetzt ist, wird derjenige auf die index.php umgeleitet. 
 if(!isset($_SESSION['userid'])){
 	header("Location: index.php");
 	die();

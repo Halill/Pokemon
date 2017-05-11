@@ -1,5 +1,6 @@
 <?php
 session_start();
+//Falls in der Session die userid nicht gesetzt ist, wird derjenige auf die index.php umgeleitet.
 if(!isset($_SESSION['userid'])){
 	header("Location: index.php");
 	die();
@@ -16,10 +17,10 @@ $spielstand = $handler->ranking();
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="/css/spielstand.css" rel="stylesheet">
-
-   <link rel="shortcut icon" type="image/x-icon" href="assets/pokeball.ico" />
-    <title>Poke-Game</title>
+  <link href="/css/spielstand.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="assets/pokeball.ico" />
+  <title>Poke-Game</title>
 </head>
 
 <body>

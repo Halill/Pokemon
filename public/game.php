@@ -1,12 +1,12 @@
 <?php
 session_start();
+//Falls in der Session die userid nicht gesetzt ist, wird derjenige auf die index.php umgeleitet.
 if(!isset($_SESSION['userid'])){
 	header("Location: index.php");
 	die();
 }
 include '../Spielstand_Handler.php';
-$h = NEW Spielstand_Handler();
-if($h->check_spielstand() && !isset($_GET['Fortsetzen'])){
+if(Spielstand_Handler::check_spielstand() && !isset($_GET['Fortsetzen'])){
 	 $link = "spielstand.php";
 }
 elseif (!$h->check_spielstand()) {
@@ -15,16 +15,20 @@ elseif (!$h->check_spielstand()) {
 else {
 	$link = "PlayerMovement.html";
 }
-if(isset($_POST["change"])) $link = "pwchange.php";
+if(isset($_POST["change"])) $link = "benutzerverwaltung.php";
 if(isset($_POST["spielstand"])) $link = "spielstand.php";
 if(isset($_POST["ranking"])) $link = "ranking.php";
-//wird gesetzt, beim Speichern -> speichern.php
+
+if(isset($_SESSION["message"]) && $_SESSION['counter']<1){
+	echo '<script type="text/javascript" language="Javascript"> alert("'.htmlentities($_SESSION["message"]).'") </script>';
+	$_SESSION['counter'] = 1;
+}
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-
+    <meta charset="UTF-8">
     <link href="/css/style.css" rel="stylesheet">
   	<link rel="shortcut icon" type="image/x-icon" href="assets/pokeball.ico" />
     <title>Poke-Game</title>
@@ -34,11 +38,6 @@ if(isset($_POST["ranking"])) $link = "ranking.php";
 <div id="game">
 <iframe style="margin: 0 auto;display: block;" src=<?php echo htmlentities($link); ?>  scrolling="no" width="760" height="628" frameBorder="0"></iframe>
 </div>
-
-<div id="message">
-<?php if(isset($_SESSION["message"])) echo htmlentities($_SESSION["message"]);?>
-</div>
-
 <div id="menue">
 <fieldset style="align:right">
   <legend style="padding:20px;text-align:center">Menü</legend>
@@ -60,7 +59,5 @@ if(isset($_POST["ranking"])) $link = "ranking.php";
 </div>
 </div>
 </fieldset>
-
-
 </body>
 </html>

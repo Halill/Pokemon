@@ -1,0 +1,44 @@
+#button{
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 48px;
+  text-align: center;
+    background-color: white;
+
+}
+#ranking {
+    font-family: 'Titillium Web', sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#ranking  td, #ranking  th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#ranking tr {
+    background-color: white;
+    color: black;
+}
+
+#ranking  th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+#button table{
+    font-family: 'Titillium Web', sans-serif;
+    text-align: center;
+    width: 100%;
+}
+input[type=image]{
+	width: 200px;
+
+	display: block;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

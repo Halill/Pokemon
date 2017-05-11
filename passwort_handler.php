@@ -151,17 +151,22 @@ class Passwort_Handler
   		//Der Code war korrekt, der Nutzer darf ein neues Passwort eingeben
 
   		if(isset($_GET['send'])) {
+				if($_POST['passwort'] == ""){
+					return "Bitte geben Sie ein Passwort ein.";
+				}
+				if($_POST['passwort2'] == ""){
+					return "Bitte wiederholen Sie ihre Passworteingabe";
+				}
   			$passwort = $_POST['passwort'];
   			$passwort2 = $_POST['passwort2'];
-
   			if($passwort != $passwort2){
-  				return $error = "Bitte identische Passwörter eingeben";
+  				return "Bitte identische Passwoerter eingeben";
   			} else { //Speichere neues Passwort und lösche den Code
   				$passworthash = password_hash($passwort, PASSWORD_DEFAULT);
   				$statement = $pdo->prepare("UPDATE users SET passwort = :passworthash, passwortcode = NULL, passwortcode_time = NULL WHERE id = :userid");
   				$result = $statement->execute(array('passworthash' => $passworthash, 'userid'=> $userid ));
   				if($result) {
-  					return "Dein Passwort wurde erfolgreich geändert";
+  					return "Dein Passwort wurde erfolgreich geaendert";
   				}
   			}
   		}
@@ -178,7 +183,7 @@ class Passwort_Handler
 	 * Analog wird die E-Mailadresse überprüft und geändert.
 	 * @return Ergebnisstring
 	 */
-	function pwchange() {
+	function change_pw_or_mail() {
 		include 'config.php';
 		if(isset($_SESSION['userid'])){
 			try {
@@ -186,6 +191,9 @@ class Passwort_Handler
 					$statement = $pdo->prepare("SELECT * FROM users WHERE id = :userid");
 					$result = $statement->execute(array('userid' => $_SESSION['userid']));
 					$user = $statement->fetch();
+					if($_POST['currentPassword'] == ""){
+						return "kein Passwort";
+					}
 					if(password_verify($_POST['currentPassword'], $user['passwort'])){
 						$pwchange = false;
 						$emailchange = false;
@@ -193,6 +201,9 @@ class Passwort_Handler
 						if(isset($_POST['newPassword']) && isset($_POST['confirmPassword'])){
 							try {
 								$passworthash = password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
+								if($_POST['newPassword'] != $_POST['confirmPassword']){
+									return "Die Passwoerter stimmen nicht ueberein.";
+								}
 								if(!empty($_POST['newPassword']) && $_POST['newPassword'] == $_POST['confirmPassword']){
 									$statement = $pdo->prepare("UPDATE users set passwort= :newpassword, changed_at = NOW() WHERE id = :userid");
 									$statement->bindParam(':newpassword', $passworthash);
@@ -208,6 +219,9 @@ class Passwort_Handler
 						//E-Mail ändern
 						if(isset($_POST['newEmail']) && isset($_POST['confirmEmail'])){
 							try {
+								if($_POST['newEmail'] != $_POST['confirmEmail']){
+									return "Die E-Mail-Adressen stimmen nicht ueberein.";
+								}
 								if(!empty($_POST['newEmail']) && $_POST['newEmail'] == $_POST['confirmEmail']){
 									$statement = $pdo->prepare("UPDATE users SET email = :newemail WHERE ID = :userid");
 									$statement->bindParam(':newemail',$_POST['newEmail']);

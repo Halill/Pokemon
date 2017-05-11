@@ -1,5 +1,6 @@
 <?php
 session_start();
+//Falls in der Session die userid nicht gesetzt ist, wird derjenige auf die index.php umgeleitet.
 if(!isset($_SESSION['userid'])){
 	header("Location: index.php");
 	die();
@@ -24,6 +25,7 @@ if((isset($_GET['Bisasam']) || isset($_GET['Glumanda']) || isset($_GET['Schiggy'
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <link href="/css/intro.css" rel="stylesheet">
 </head>
 <body>

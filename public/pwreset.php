@@ -1,9 +1,12 @@
 <?php
 include '../passwort_handler.php';
-$h = NEW Passwort_Handler();
-$ausgabe = $h->pwreset();
-echo htmlentities($ausgabe);
-
+$ausgabe = Passwort_Handler::pwreset();
+if(isset($ausgabe)){
+  echo '<script type="text/javascript" language="Javascript"> alert("'.htmlentities($ausgabe).'") </script>';
+}
+if($ausgabe == "Dein Passwort wurde erfolgreich geaendert"){
+  header("Location: index.php");
+}
 ?>
 
 <!DOCTYPE html>
