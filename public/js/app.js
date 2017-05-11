@@ -138,7 +138,7 @@ var SimpleGame = (function () {
 	this.myText.visible = false;
 	this.texBox.visible = false;
 	
-	setUp(this.myText,this.enemyText,this.myPokemon,this.aiPokemon, atk1,atk2,atk3,atk4,infoBattle);
+	setUp(this.myText,this.enemyText,this.myPokemon,this.aiPokemon, atk1,atk2,atk3,atk4,infoBattle,this.map1,this.battle,this.player,this.nextDialog);
 	//newPlayer(this.labor,this.map1,this.player,this.prof,this.texBox,this.text,this.nextDialog);
 	
 	//writeBattleInfo(this.enemyText,this.myText,randomPokemon(), loadMyPokemon());
@@ -249,11 +249,17 @@ var ai_Sprite;
 var my_Pokemon;
 var ai_Pokemon;
 
+var mapPic;
+var battlePic;
+var player;
+
 var enemyText;
 var dialog0 = "Pokemon erscheint,openBattle";
 var dialog1 = "Oh wie ich sehe haben wir einen\rneues Gesicht in der Stadt,Möchtest du dir ein Pokemon aussuchen?,Wir haben 3 zur Auswahl";
+var dialog2 = "closeBattle";
 var currentText;
 var dialogIndex;
+var nextButton;
 
 var atk1;
 var atk2;
@@ -261,7 +267,7 @@ var atk3;
 var atk4;
 var infoBattle;
 
-function setUp(myT,enemyT,mySprite,aiSprite, a1,a2,a3,a4,info)
+function setUp(myT,enemyT,mySprite,aiSprite, a1,a2,a3,a4,info, mPic,bPic,ply,nB)
 {
 	myText = myT;
 	enemyText = enemyT;
@@ -271,11 +277,16 @@ function setUp(myT,enemyT,mySprite,aiSprite, a1,a2,a3,a4,info)
 	atk2 = a2;
 	atk3 = a3;
 	atk4 = a4;
-	infoBattle = info;
+	infoBattle = info;	
+	mapPic = mPic;
+	battlePic = bPic; 
+	player = ply;
+	nextButton = nB;
+	
 	loadMyPokemon();
 }
 
-function openDialog(dialogBox, dialogNum,line, nextButton)
+function openDialog(dialogBox, dialogNum,line)
 {
 	switch(dialogNum)
 	{
@@ -299,12 +310,15 @@ function openDialog(dialogBox, dialogNum,line, nextButton)
 	
 }
 	
-	function openFightWindow(mapPic,battlePic,player)
+	function openFightWindow()
 	{
 		mapPic.visible = false;
 		player.visible = false;
 		battlePic.visible = true;
 		randomPokemon();
+		dialogIndex = 0;
+		currentText= dialog2.split(",");
+		
 	}
 	
 	function writeBattleInfo(ai /* ,attk1,attk2,attk3,attk4 */)
@@ -323,6 +337,7 @@ function openDialog(dialogBox, dialogNum,line, nextButton)
 		atk3.setText(my_Pokemon.attname3);
 		atk4.setText(my_Pokemon.attname4);
 		
+		nextButton.visible = true;
 		infoBattle.visible = true;
 		atk1.visible = true;
 		atk2.visible = true;
@@ -397,6 +412,11 @@ function openDialog(dialogBox, dialogNum,line, nextButton)
 
 function nextDialogEvent() {
 	
+	if(currentText[dialogIndex] == "closeBattle")
+	{
+		closeFightWindow();
+	}
+	
 	if(currentText.length == dialogIndex + 1)
 	{
 		this.texBox.visible = false;
@@ -412,7 +432,7 @@ function nextDialogEvent() {
 			this.texBox.visible = false;
 			this.nextDialog.visible = false;
 			this.text.visible = false;	
-			openFightWindow(this.map1,this.battle,this.player);
+			openFightWindow();
 		}
 		this.prof.frame = this.prof.frame + 1;
 	}
@@ -481,7 +501,7 @@ function down(item,parm,atkID,mapPic,battlePic,player) {
     	infoBattle.setText(my_Pokemon.pokename + " setzt \n" + item.text + " ein\n" + ai_Pokemon.pokename + " setzt\n" + ai_Pokemon.attname4 + " ein");
     	break;    	
     }
-    my_Pokemon.kp -= damage;
+    my_Pokemon.kp -= Math.floor(damage * ai_Pokemon.staerke);
    	if(my_Pokemon.kp <= 0)
   	{
   			my_Pokemon.kp = 0;
@@ -491,11 +511,25 @@ function down(item,parm,atkID,mapPic,battlePic,player) {
     enemyText.setText(ai_Pokemon.pokename + "\nKP:" + ai_Pokemon.kp);
 	myText.setText(my_Pokemon.pokename + "\nKP:" + my_Pokemon.kp);
 }
+
 	function closeFightWindow()
 	{
+		pokemonSprite.visible = false;
+		ai_Sprite.visible = false;
+		myText.visible = false;
+		enemyText.visible = false;
+		
+		infoBattle.visible = false;
+		atk1.visible = false;
+		atk2.visible = false;
+		atk3.visible = false;
+		atk4.visible = false;
+		
 		mapPic.visible = true;
 		player.visible = true;
 		battlePic.visible = false;
+		loadMyPokemon();		
+		
 	}
 
 window.onload = function () {
