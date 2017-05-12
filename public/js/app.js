@@ -2,13 +2,13 @@ var SimpleGame = (function () {
     function SimpleGame() {
         this.game = new Phaser.Game(720 , 588, Phaser.AUTO, 'content', { preload: this.preload, create: this.create, update: this.update, render: this.render });
     }
+    //Im Preload werden alle Bilder und Sprites geladen
     SimpleGame.prototype.preload = function () {
         this.game.load.image('map1', '/assets/misc/Screens/Map1/Viridian_City_Map.png');
 		this.game.load.image('battle', '/assets/misc/Screens/Battle.png');
         this.game.load.image('heightmap', 'assets/misc/Screens/Map1/Heightmap.png');
 		this.game.load.image('texBox', 'assets/misc/Chat/chatBox.png');
 		this.game.load.image('labor', 'assets/misc/Screens/labor.png');
-      //  this.game.load.spritesheet('button', 'assets/buttons/button_sprite_sheet.png', 100, 100);
         this.game.load.spritesheet('player', 'assets/misc/Player/Player_Sprite.png', 19, 27);
 		this.game.load.spritesheet('prof', 'assets/misc/NPC/Prof Halil.png', 389, 377);
 		this.game.load.spritesheet('nextDialog', 'assets/buttons/nextDialog.png', 75, 74);
@@ -17,6 +17,8 @@ var SimpleGame = (function () {
 		
     };
     SimpleGame.prototype.create = function () {
+      
+      //Einbinden der Bilder sowie setzen der position und größen
         this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.game.scale.pageAlignHorizontally = true;
         this.game.scale.pageAlignVertically = true;
@@ -57,6 +59,7 @@ var SimpleGame = (function () {
         this.texBox.name = "chat";
         this.visible = true;
 		
+		//Hier wird der Next Button erstellt mit einer Eventfunktion
 		this.nextDialog = this.game.add.button(this.texBox.x + this.texBox.width - 50,this.game.height - 45, 'nextDialog', nextDialogEvent, this, 0,1,2);
 		this.nextDialog.width /= 2;
 		this.nextDialog.height /= 2;
@@ -72,7 +75,7 @@ var SimpleGame = (function () {
 		this.myPokemon.height*= 3;
 		this.myPokemon.visible = false;
 		
-		
+		//Die Attacken Texte werden hier erstellt und gesetzt
 		 var infoBattle = this.game.add.text(30,this.game.height / 2 + 140,"Kampf beginnt", { fill: "#ff0044"});
 		
 		    var atk1 = this.game.add.text(this.game.width / 5 + 200,this.game.height / 2 + 140,"atk1");
@@ -111,9 +114,9 @@ var SimpleGame = (function () {
         downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
         leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
         rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-       // this.game.stage.backgroundColor = '#000000';
+       
 	   
-		
+		//Die Infos von den Pokemons werden hier erstellt, sowie deren Farbe und Position
 		this.text = this.game.add.text(this.texBox.x + 15,this.texBox.y + 5, "", {
         font: "20px Arial",
         fill: "#ff0044",
@@ -138,16 +141,21 @@ var SimpleGame = (function () {
 	this.myText.visible = false;
 	this.texBox.visible = false;
 	
+	//Im setUp werden die Objekte an die Nachfolgende js Klasse übergeben.
 	setUp(this.myText,this.enemyText,this.myPokemon,this.aiPokemon, atk1,atk2,atk3,atk4,infoBattle,this.map1,this.battle,this.player,this.nextDialog);
-	//newPlayer(this.labor,this.map1,this.player,this.prof,this.texBox,this.text,this.nextDialog);
-	
-	//writeBattleInfo(this.enemyText,this.myText,randomPokemon(), loadMyPokemon());
+
     };
     SimpleGame.prototype.update = function () {      
 
+	//Wenn die Map1 aktiv ist, lässt sicher der Spieler auf der Karte bewegen
 	if(this.map1.visible == true && this.texBox.visible == false)
 	{
-	var speed = 2;
+		//speed des Spielers
+	var speed = 1;
+	//Abfragen der Input des Keyboards. Es wird dann abgefragt, welche Farbe die Pixel der Heightmap hat. Ist sie schwarz so lässt sich der Spieler nicht in die Richtung bewegen
+	//ist die Farbe grün, so wird nach zufall ein Pokemon erscheinen und bei weiß bewegt er sich normal weiter.
+	//Mit "frame" wird das Sprite Bild festgelegt
+	
 	if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 			
 			var isMoveable = 0; 
@@ -229,12 +237,9 @@ var SimpleGame = (function () {
             this.player.frame = 4;
         }
 	}
-        //if (this.player.name != "undefined" && this.house.name != "undefined")
-        //    this.game.physics.arcade.collide(this.player, this.house);
     };
     SimpleGame.prototype.render = function () {
-        //if (this.player.name != "undefined")
-        //    this.game.debug.bodyInfo(this.house, 19, 27);
+
     };
 	
 	function getRndInteger(min, max) {
@@ -286,6 +291,7 @@ function setUp(myT,enemyT,mySprite,aiSprite, a1,a2,a3,a4,info, mPic,bPic,ply,nB)
 	loadMyPokemon();
 }
 
+//Hier werden die Dialoge nach Num angezeigt, zudem wird der "nextButton" angezeigt um durch die Dialog Seiten zu steppen.
 function openDialog(dialogBox, dialogNum,line)
 {
 	switch(dialogNum)
@@ -321,7 +327,7 @@ function openDialog(dialogBox, dialogNum,line)
 		
 	}
 	
-	function writeBattleInfo(ai /* ,attk1,attk2,attk3,attk4 */)
+	function writeBattleInfo(ai)
 	{	
 		enemyText.visible = true;
 		myText.visible = true;
@@ -366,7 +372,8 @@ function openDialog(dialogBox, dialogNum,line)
         xmlhttp.send();
 		
 		}
-		
+	
+	//Mit hilfe von Json, wird eine anfrage an die Datenbank geschickt und es kommt ein random Pokemon zurück
 	function randomPokemon() {
 			
        if (window.XMLHttpRequest) {
