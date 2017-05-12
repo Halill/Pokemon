@@ -78,19 +78,19 @@ var SimpleGame = (function () {
 		//Die Attacken Texte werden hier erstellt und gesetzt
 		 var infoBattle = this.game.add.text(30,this.game.height / 2 + 140,"Kampf beginnt", { fill: "#ff0044"});
 		
-		    var atk1 = this.game.add.text(this.game.width / 5 + 200,this.game.height / 2 + 140,"atk1");
+		    var atk1 = this.game.add.text(this.game.width / 5 + 160,this.game.height / 2 + 140,"atk1");
 		    atk1.inputEnabled = true;
 			atk1.events.onInputDown.add(down, this, 0, 1);
 			
-		    var atk2 = this.game.add.text(this.game.width / 2 + 200,this.game.height / 2 + 140,"atk2");
+		    var atk2 = this.game.add.text(this.game.width / 2 + 160,this.game.height / 2 + 140,"atk2");
 		    atk2.inputEnabled = true;
 			atk2.events.onInputDown.add(down, this, 0, 2);
 			
-		    var atk3 = this.game.add.text(this.game.width / 5 + 200,this.game.height / 2 + 230,"atk3");
+		    var atk3 = this.game.add.text(this.game.width / 5 + 160,this.game.height / 2 + 230,"atk3");
 		    atk3.inputEnabled = true;
 			atk3.events.onInputDown.add(down, this, 0, 3);
 								
-		    var atk4 = this.game.add.text(this.game.width / 2 + 200,this.game.height / 2 + 230,"atk4");
+		    var atk4 = this.game.add.text(this.game.width / 2 + 160,this.game.height / 2 + 230,"atk4");
 		    atk4.inputEnabled = true;
 			atk4.events.onInputDown.add(down, this, 0, 4);
 		
@@ -216,6 +216,13 @@ var SimpleGame = (function () {
 					isMoveable = 1;
 					break;
 				}
+				else if(this.bmd.getPixelRGB(this.player.x + x, this.player.y - speed).r == 0 && this.bmd.getPixelRGB(this.player.x + x, this.player.y - speed).g == 255 && this.bmd.getPixelRGB(this.player.x + x, this.player.y - speed).b == 96)
+				{
+					if(getRndInteger(0,3000) == 1)
+					{	
+						openDialog(this.texBox,0,this.text,this.nextDialog);
+					}
+				}
 			}
 			if(isMoveable == 0)
 				this.player.y -= speed;
@@ -230,6 +237,13 @@ var SimpleGame = (function () {
 				{
 					isMoveable = 1;
 					break;
+				}
+				else if (this.bmd.getPixelRGB(this.player.x + x, this.player.y + speed + Math.round(this.player.height)).r == 0 && this.bmd.getPixelRGB(this.player.x + x, this.player.y + speed + Math.round(this.player.height)).g == 255 && this.bmd.getPixelRGB(this.player.x + x, this.player.y + speed + Math.round(this.player.height)).b == 96)
+				{
+					if(getRndInteger(0,3000) == 1)
+					{	
+						openDialog(this.texBox,0,this.text,this.nextDialog);
+					}
 				}
 			}
 			if(isMoveable == 0)
@@ -349,6 +363,9 @@ function openDialog(dialogBox, dialogNum,line)
 		atk2.visible = true;
 		atk3.visible = true;
 		atk4.visible = true;
+		
+		nextButton.x += 100;
+		nextButton.y -= 20;
 
 	}
 	
@@ -422,6 +439,8 @@ function nextDialogEvent() {
 	if(currentText[dialogIndex] == "closeBattle")
 	{
 		closeFightWindow();
+		nextButton.x -= 100;
+		nextButton.y += 20;
 	}
 	
 	if(currentText.length == dialogIndex + 1)
