@@ -152,7 +152,7 @@ var SimpleGame = (function () {
 	{
 		//speed des Spielers
 	var speed = 1;
-	//Abfragen der Input des Keyboards. Es wird dann abgefragt, welche Farbe die Pixel der Heightmap hat. Ist sie schwarz so lässt sich der Spieler nicht in die Richtung bewegen
+	//Abfragen des Keyboards. Es wird dann abgefragt, welche Farbe die Pixel der Heightmap hat. Ist sie schwarz so lässt sich der Spieler nicht in die Richtung bewegen
 	//ist die Farbe grün, so wird nach zufall ein Pokemon erscheinen und bei weiß bewegt er sich normal weiter.
 	//Mit "frame" wird das Sprite Bild festgelegt
 	
@@ -286,6 +286,7 @@ var atk3;
 var atk4;
 var infoBattle;
 
+//Hier werden einige Objekte übergeben, wie die Map, Player, Button, Texte
 function setUp(myT,enemyT,mySprite,aiSprite, a1,a2,a3,a4,info, mPic,bPic,ply,nB)
 {
 	myText = myT;
@@ -302,6 +303,7 @@ function setUp(myT,enemyT,mySprite,aiSprite, a1,a2,a3,a4,info, mPic,bPic,ply,nB)
 	player = ply;
 	nextButton = nB;
 	
+	//Aufruf an die Datenbank, um das Pokemon zu laden
 	loadMyPokemon();
 }
 
@@ -329,7 +331,9 @@ function openDialog(dialogBox, dialogNum,line)
 	nextButton.visible = true;
 	
 }
-	
+	//Hier wird das Battle Bild sichtbar gemacht und die Karte und Spieler unsichtbar. 
+	//CurrentText wird auf dialog2 gesetzt, um dem nextButton zu sagen was passieren soll falls er gedrückt wird.
+		
 	function openFightWindow()
 	{
 		mapPic.visible = false;
@@ -341,6 +345,7 @@ function openDialog(dialogBox, dialogNum,line)
 		
 	}
 	
+	//Hier wird das Gegner Pokemon übergeben und sichtbar gemacht. Außerdem werden Attacken und das eigene Pokemon sichtbar gemacht.
 	function writeBattleInfo(ai)
 	{	
 		enemyText.visible = true;
@@ -369,6 +374,7 @@ function openDialog(dialogBox, dialogNum,line)
 
 	}
 	
+	//Laden des eigenen Pokemon aus der Datenbank
 	function loadMyPokemon() {
        if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -414,7 +420,9 @@ function openDialog(dialogBox, dialogNum,line)
 
 		}
 		
-		function wonFight() {
+	//Falls ein Kampf gewonnen wird, wird der die wonFight.php aufgerufen und dort der Score um 1. erhöt.
+	//Um den Score dauerhaft zu erhöhen, muss noch die Spiel Speichern ausgeführt werden.
+	function wonFight() {
 			
        if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -434,6 +442,7 @@ function openDialog(dialogBox, dialogNum,line)
 		}
 	
 
+//Wird der nextButton gedrückt, wird geprüft was im nächsten Dialog block des currentText arrays steht. Falls nichts mehr dort steht, wird der Dialog beendet.
 function nextDialogEvent() {
 	
 	if(currentText[dialogIndex] == "closeBattle")
@@ -464,18 +473,8 @@ function nextDialogEvent() {
 	}
 }
 
-function newPlayer(labor,town,player,profHalil,chatBox,line,nextDialog)
-{
-	labor.visible = true;
-	profHalil.visible = true;
-	town.visible = false;
-	player.visible = false;
-	line.visible = true;
-	nextDialog.visible = true;
-	openDialog(chatBox,1,line,nextDialog);
-}
-
-function down(item,parm,atkID,mapPic,battlePic,player) {
+//Wird eine Attacke gedrückt, so wird die attackenID und Name übergeben
+function down(item,parm,atkID) {
 
 	if(ai_Pokemon.kp == 0 || my_Pokemon.kp == 0)
 		return;
@@ -538,7 +537,8 @@ function down(item,parm,atkID,mapPic,battlePic,player) {
 	myText.setText(my_Pokemon.pokename + "\nKP:" + my_Pokemon.kp);
 }
 
-	function closeFightWindow()
+//Wird der Kampf durch den nextButton beendet, so werden Texte und Bilder unsichtbar gemacht und die Karte und Spieler sichtbar
+function closeFightWindow()
 	{
 		pokemonSprite.visible = false;
 		ai_Sprite.visible = false;
