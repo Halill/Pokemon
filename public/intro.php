@@ -41,22 +41,35 @@ if((isset($_GET['Bisasam']) || isset($_GET['Glumanda']) || isset($_GET['Schiggy'
 </head>
 <body>
 	<div id="oben">
+		<table cellspacing='23'>
+			<tr>
+				<td>
     <!-- Bisasam wird ausgewählt-->
 		<form action="?Bisasam=1" method="post">
-			<input type="image" src="/assets/misc/Pokemon/Bisasam_Front.png" alt="bisasam" width="100" height="100"/>
+			<input type="image" src="/assets/misc/Pokemon/Bisasam_Front.png" alt="Bisasam" width="35" height="33"/>
 		</form>
+		</td>
+		<td>
     <!-- Schiggy wird ausgewählt-->
 		<form action="?Schiggy=1" method="post">
-			<input type="image" src="/assets/misc/Pokemon/Schiggy_Front.gif" alt="bisasam" width="100" height="100"/>
+			<input type="image" src="/assets/misc/Pokemon/Shiggy_Front.png" alt="Schiggy" width="38" height="39"/>	
 		</form>
+		</td>
+		<td>
     <!-- Glumanda wird ausgewählt-->
 		<form action="?Glumanda=1" method="post">
-			<input type="image" src="/assets/misc/Pokemon/Glumanda_Front.gif" alt="bisasam" width="100" height="100"/>
+			<input type="image" src="/assets/misc/Pokemon/Glumanda_Front.png" alt="Glumanda" width="38" height="42"/>
 		</form>
-
+		</td>
+		</tr>
+</table>
 	</div>
 	<div id="unten">
-		<img src="/assets/intro.png" alt="intro" width="760" height="628">
+		<img src="/assets/misc/Screens/labor.png" alt="intro" width="760" height="628">
+	</div>
+		<div id="Text">
+		<p>Hallo, ich bin Professor Halil, willkommen in der Welt der Pokemon.</p>
+		<p>Wähle ein Pokemon aus.</p>
 	</div>
 </body>
 </html>

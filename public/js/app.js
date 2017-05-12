@@ -8,9 +8,7 @@ var SimpleGame = (function () {
 		this.game.load.image('battle', '/assets/misc/Screens/Battle.png');
         this.game.load.image('heightmap', 'assets/misc/Screens/Map1/Heightmap.png');
 		this.game.load.image('texBox', 'assets/misc/Chat/chatBox.png');
-		this.game.load.image('labor', 'assets/misc/Screens/labor.png');
         this.game.load.spritesheet('player', 'assets/misc/Player/Player_Sprite.png', 19, 27);
-		this.game.load.spritesheet('prof', 'assets/misc/NPC/Prof Halil.png', 389, 377);
 		this.game.load.spritesheet('nextDialog', 'assets/buttons/nextDialog.png', 75, 74);
 		this.game.load.spritesheet('myPokemon', 'assets/misc/Pokemon/pokemon_sprite_back.png',96,96);
 		this.game.load.spritesheet('aiPokemon', 'assets/misc/Pokemon/pokemon_sprite.png',96,96);
@@ -32,11 +30,6 @@ var SimpleGame = (function () {
 		this.map1.width = this.game.width;
 		this.map1.height = this.game.height;
 		
-		this.labor = this.game.add.sprite(0, 0, 'labor');
-		this.labor.width = this.game.width;
-		this.labor.height = this.game.height;
-		this.labor.visible = false;
-		
 		this.battle = this.game.add.sprite(0, 0, 'battle');
 		this.battle.width = this.game.width;
 		this.battle.height = this.game.height;
@@ -46,11 +39,6 @@ var SimpleGame = (function () {
 		this.player.width = this.player.width / 2;
 		this.player.height = this.player.height / 2;
         this.player.name = "undefined";
-
-		this.prof = this.game.add.sprite(0,this.game.height - 163, 'prof');
-		this.prof.width = this.prof.width / 2;
-		this.prof.height= this.prof.height / 2;
-		this.prof.visible = false;
 		
 		var offset = this.game.width / 2 - 499 / 2;
 		
@@ -159,7 +147,6 @@ var SimpleGame = (function () {
 	if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 			
 			var isMoveable = 0; 
-			this.prof.frame = 1;
 			
 			for(var y = 0; y <= Math.round(this.player.height); y++)
 			{
@@ -183,7 +170,6 @@ var SimpleGame = (function () {
         else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
 				
 			var isMoveable = 0; 
-			this.prof.frame = 2;
 			
 			for(var y = 0; y <= Math.round(this.player.height); y++)
 			{
@@ -207,7 +193,6 @@ var SimpleGame = (function () {
         else if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
 			
 			var isMoveable = 0; 
-			this.prof.frame = 3;
 			
 			for(var x = 0; x <= Math.round(this.player.width); x++)
 			{
@@ -308,6 +293,7 @@ function setUp(myT,enemyT,mySprite,aiSprite, a1,a2,a3,a4,info, mPic,bPic,ply,nB)
 }
 
 //Hier werden die Dialoge nach Num angezeigt, zudem wird der "nextButton" angezeigt um durch die Dialog Seiten zu steppen.
+//Das dialog1 bietet die Möglichkeit das Intro noch in diese Klasse einzubinden, wird aber derzeit nicht genutzt.
 function openDialog(dialogBox, dialogNum,line)
 {
 	switch(dialogNum)
@@ -469,7 +455,6 @@ function nextDialogEvent() {
 			this.text.visible = false;	
 			openFightWindow();
 		}
-		this.prof.frame = this.prof.frame + 1;
 	}
 }
 
