@@ -2,13 +2,13 @@ var SimpleGame = (function () {
     function SimpleGame() {
         this.game = new Phaser.Game(720 , 588, Phaser.AUTO, 'content', { preload: this.preload, create: this.create, update: this.update, render: this.render });
     }
+    //Im Preload werden alle Bilder und Sprites geladen
     SimpleGame.prototype.preload = function () {
         this.game.load.image('map1', '/assets/misc/Screens/Map1/Viridian_City_Map.png');
 		this.game.load.image('battle', '/assets/misc/Screens/Battle.png');
         this.game.load.image('heightmap', 'assets/misc/Screens/Map1/Heightmap.png');
 		this.game.load.image('texBox', 'assets/misc/Chat/chatBox.png');
 		this.game.load.image('labor', 'assets/misc/Screens/labor.png');
-      //  this.game.load.spritesheet('button', 'assets/buttons/button_sprite_sheet.png', 100, 100);
         this.game.load.spritesheet('player', 'assets/misc/Player/Player_Sprite.png', 19, 27);
 		this.game.load.spritesheet('prof', 'assets/misc/NPC/Prof Halil.png', 389, 377);
 		this.game.load.spritesheet('nextDialog', 'assets/buttons/nextDialog.png', 75, 74);
@@ -17,6 +17,8 @@ var SimpleGame = (function () {
 		
     };
     SimpleGame.prototype.create = function () {
+      
+      //Einbinden der Bilder sowie setzen der position und größen
         this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.game.scale.pageAlignHorizontally = true;
         this.game.scale.pageAlignVertically = true;
@@ -57,6 +59,7 @@ var SimpleGame = (function () {
         this.texBox.name = "chat";
         this.visible = true;
 		
+		//Hier wird der Next Button erstellt mit einer Eventfunktion
 		this.nextDialog = this.game.add.button(this.texBox.x + this.texBox.width - 50,this.game.height - 45, 'nextDialog', nextDialogEvent, this, 0,1,2);
 		this.nextDialog.width /= 2;
 		this.nextDialog.height /= 2;
@@ -72,22 +75,22 @@ var SimpleGame = (function () {
 		this.myPokemon.height*= 3;
 		this.myPokemon.visible = false;
 		
-		
+		//Die Attacken Texte werden hier erstellt und gesetzt
 		 var infoBattle = this.game.add.text(30,this.game.height / 2 + 140,"Kampf beginnt", { fill: "#ff0044"});
 		
-		    var atk1 = this.game.add.text(this.game.width / 5 + 200,this.game.height / 2 + 140,"atk1");
+		    var atk1 = this.game.add.text(this.game.width / 5 + 160,this.game.height / 2 + 140,"atk1");
 		    atk1.inputEnabled = true;
 			atk1.events.onInputDown.add(down, this, 0, 1);
 			
-		    var atk2 = this.game.add.text(this.game.width / 2 + 200,this.game.height / 2 + 140,"atk2");
+		    var atk2 = this.game.add.text(this.game.width / 2 + 160,this.game.height / 2 + 140,"atk2");
 		    atk2.inputEnabled = true;
 			atk2.events.onInputDown.add(down, this, 0, 2);
 			
-		    var atk3 = this.game.add.text(this.game.width / 5 + 200,this.game.height / 2 + 230,"atk3");
+		    var atk3 = this.game.add.text(this.game.width / 5 + 160,this.game.height / 2 + 230,"atk3");
 		    atk3.inputEnabled = true;
 			atk3.events.onInputDown.add(down, this, 0, 3);
 								
-		    var atk4 = this.game.add.text(this.game.width / 2 + 200,this.game.height / 2 + 230,"atk4");
+		    var atk4 = this.game.add.text(this.game.width / 2 + 160,this.game.height / 2 + 230,"atk4");
 		    atk4.inputEnabled = true;
 			atk4.events.onInputDown.add(down, this, 0, 4);
 		
@@ -111,9 +114,9 @@ var SimpleGame = (function () {
         downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
         leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
         rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-       // this.game.stage.backgroundColor = '#000000';
+       
 	   
-		
+		//Die Infos von den Pokemons werden hier erstellt, sowie deren Farbe und Position
 		this.text = this.game.add.text(this.texBox.x + 15,this.texBox.y + 5, "", {
         font: "20px Arial",
         fill: "#ff0044",
@@ -138,16 +141,21 @@ var SimpleGame = (function () {
 	this.myText.visible = false;
 	this.texBox.visible = false;
 	
+	//Im setUp werden die Objekte an die Nachfolgende js Klasse übergeben.
 	setUp(this.myText,this.enemyText,this.myPokemon,this.aiPokemon, atk1,atk2,atk3,atk4,infoBattle,this.map1,this.battle,this.player,this.nextDialog);
-	//newPlayer(this.labor,this.map1,this.player,this.prof,this.texBox,this.text,this.nextDialog);
-	
-	//writeBattleInfo(this.enemyText,this.myText,randomPokemon(), loadMyPokemon());
+
     };
     SimpleGame.prototype.update = function () {      
 
+	//Wenn die Map1 aktiv ist, lässt sicher der Spieler auf der Karte bewegen
 	if(this.map1.visible == true && this.texBox.visible == false)
 	{
-	var speed = 2;
+		//speed des Spielers
+	var speed = 1;
+	//Abfragen des Keyboards. Es wird dann abgefragt, welche Farbe die Pixel der Heightmap hat. Ist sie schwarz so lässt sich der Spieler nicht in die Richtung bewegen
+	//ist die Farbe grün, so wird nach zufall ein Pokemon erscheinen und bei weiß bewegt er sich normal weiter.
+	//Mit "frame" wird das Sprite Bild festgelegt
+	
 	if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 			
 			var isMoveable = 0; 
@@ -208,6 +216,13 @@ var SimpleGame = (function () {
 					isMoveable = 1;
 					break;
 				}
+				else if(this.bmd.getPixelRGB(this.player.x + x, this.player.y - speed).r == 0 && this.bmd.getPixelRGB(this.player.x + x, this.player.y - speed).g == 255 && this.bmd.getPixelRGB(this.player.x + x, this.player.y - speed).b == 96)
+				{
+					if(getRndInteger(0,3000) == 1)
+					{	
+						openDialog(this.texBox,0,this.text,this.nextDialog);
+					}
+				}
 			}
 			if(isMoveable == 0)
 				this.player.y -= speed;
@@ -223,18 +238,22 @@ var SimpleGame = (function () {
 					isMoveable = 1;
 					break;
 				}
+				else if (this.bmd.getPixelRGB(this.player.x + x, this.player.y + speed + Math.round(this.player.height)).r == 0 && this.bmd.getPixelRGB(this.player.x + x, this.player.y + speed + Math.round(this.player.height)).g == 255 && this.bmd.getPixelRGB(this.player.x + x, this.player.y + speed + Math.round(this.player.height)).b == 96)
+				{
+					if(getRndInteger(0,3000) == 1)
+					{	
+						openDialog(this.texBox,0,this.text,this.nextDialog);
+					}
+				}
 			}
 			if(isMoveable == 0)
 				this.player.y += speed;
             this.player.frame = 4;
         }
 	}
-        //if (this.player.name != "undefined" && this.house.name != "undefined")
-        //    this.game.physics.arcade.collide(this.player, this.house);
     };
     SimpleGame.prototype.render = function () {
-        //if (this.player.name != "undefined")
-        //    this.game.debug.bodyInfo(this.house, 19, 27);
+
     };
 	
 	function getRndInteger(min, max) {
@@ -267,6 +286,7 @@ var atk3;
 var atk4;
 var infoBattle;
 
+//Hier werden einige Objekte übergeben, wie die Map, Player, Button, Texte
 function setUp(myT,enemyT,mySprite,aiSprite, a1,a2,a3,a4,info, mPic,bPic,ply,nB)
 {
 	myText = myT;
@@ -283,9 +303,11 @@ function setUp(myT,enemyT,mySprite,aiSprite, a1,a2,a3,a4,info, mPic,bPic,ply,nB)
 	player = ply;
 	nextButton = nB;
 	
+	//Aufruf an die Datenbank, um das Pokemon zu laden
 	loadMyPokemon();
 }
 
+//Hier werden die Dialoge nach Num angezeigt, zudem wird der "nextButton" angezeigt um durch die Dialog Seiten zu steppen.
 function openDialog(dialogBox, dialogNum,line)
 {
 	switch(dialogNum)
@@ -309,7 +331,9 @@ function openDialog(dialogBox, dialogNum,line)
 	nextButton.visible = true;
 	
 }
-	
+	//Hier wird das Battle Bild sichtbar gemacht und die Karte und Spieler unsichtbar. 
+	//CurrentText wird auf dialog2 gesetzt, um dem nextButton zu sagen was passieren soll falls er gedrückt wird.
+		
 	function openFightWindow()
 	{
 		mapPic.visible = false;
@@ -321,7 +345,8 @@ function openDialog(dialogBox, dialogNum,line)
 		
 	}
 	
-	function writeBattleInfo(ai /* ,attk1,attk2,attk3,attk4 */)
+	//Hier wird das Gegner Pokemon übergeben und sichtbar gemacht. Außerdem werden Attacken und das eigene Pokemon sichtbar gemacht.
+	function writeBattleInfo(ai)
 	{	
 		enemyText.visible = true;
 		myText.visible = true;
@@ -343,9 +368,13 @@ function openDialog(dialogBox, dialogNum,line)
 		atk2.visible = true;
 		atk3.visible = true;
 		atk4.visible = true;
+		
+		nextButton.x += 100;
+		nextButton.y -= 20;
 
 	}
 	
+	//Laden des eigenen Pokemon aus der Datenbank
 	function loadMyPokemon() {
        if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -366,7 +395,8 @@ function openDialog(dialogBox, dialogNum,line)
         xmlhttp.send();
 		
 		}
-		
+	
+	//Mit hilfe von Json, wird eine anfrage an die Datenbank geschickt und es kommt ein random Pokemon zurück
 	function randomPokemon() {
 			
        if (window.XMLHttpRequest) {
@@ -390,7 +420,9 @@ function openDialog(dialogBox, dialogNum,line)
 
 		}
 		
-		function wonFight() {
+	//Falls ein Kampf gewonnen wird, wird der die wonFight.php aufgerufen und dort der Score um 1. erhöt.
+	//Um den Score dauerhaft zu erhöhen, muss noch die Spiel Speichern ausgeführt werden.
+	function wonFight() {
 			
        if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -410,11 +442,14 @@ function openDialog(dialogBox, dialogNum,line)
 		}
 	
 
+//Wird der nextButton gedrückt, wird geprüft was im nächsten Dialog block des currentText arrays steht. Falls nichts mehr dort steht, wird der Dialog beendet.
 function nextDialogEvent() {
 	
 	if(currentText[dialogIndex] == "closeBattle")
 	{
 		closeFightWindow();
+		nextButton.x -= 100;
+		nextButton.y += 20;
 	}
 	
 	if(currentText.length == dialogIndex + 1)
@@ -438,18 +473,8 @@ function nextDialogEvent() {
 	}
 }
 
-function newPlayer(labor,town,player,profHalil,chatBox,line,nextDialog)
-{
-	labor.visible = true;
-	profHalil.visible = true;
-	town.visible = false;
-	player.visible = false;
-	line.visible = true;
-	nextDialog.visible = true;
-	openDialog(chatBox,1,line,nextDialog);
-}
-
-function down(item,parm,atkID,mapPic,battlePic,player) {
+//Wird eine Attacke gedrückt, so wird die attackenID und Name übergeben
+function down(item,parm,atkID) {
 
 	if(ai_Pokemon.kp == 0 || my_Pokemon.kp == 0)
 		return;
@@ -512,7 +537,8 @@ function down(item,parm,atkID,mapPic,battlePic,player) {
 	myText.setText(my_Pokemon.pokename + "\nKP:" + my_Pokemon.kp);
 }
 
-	function closeFightWindow()
+//Wird der Kampf durch den nextButton beendet, so werden Texte und Bilder unsichtbar gemacht und die Karte und Spieler sichtbar
+function closeFightWindow()
 	{
 		pokemonSprite.visible = false;
 		ai_Sprite.visible = false;
