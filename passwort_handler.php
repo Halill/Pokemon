@@ -74,12 +74,12 @@ class Passwort_Handler
 
 							// Hier wird der Mailtext erstellt
 							define('BODY','Hallo '.$user['username'].',
-							fuer deinen Pokemon-Account wurde nach einem neuen Passwort gefragt. Um ein neues Passwort zu vergeben, rufe innerhalb der naechsten 24 Stunden die folgende Website auf:
-							'.$url_passwortcode.'
-							Sollte dir dein Passwort wieder eingefallen sein oder hast du dies nicht angefordert, kannst du diese E-Mail einfach ignorieren.
+fuer deinen Pokemon-Account wurde nach einem neuen Passwort gefragt. Um ein neues Passwort zu vergeben, rufe innerhalb der naechsten 24 Stunden die folgende Website auf:
+'.$url_passwortcode.'
+Sollte dir dein Passwort wieder eingefallen sein oder hast du dies nicht angefordert, kannst du diese E-Mail einfach ignorieren.
 
-							Liebe Gruesse,
-							Pokemon-Team');
+Liebe Gruesse,
+Pokemon-Team');
 
 							// Hier werden die Daten zum Versenden der Mail definiert und vorbereitet
 							$headers = array (
